@@ -1,11 +1,12 @@
 import { storageService } from './async-storage-service.js'
 
-module.exports = {
-    query,
-    getById,
-    remove,
-    save
-}
+// module.exports = {
+//     query,
+//     getById,
+//     remove,
+//     save
+// }
+
 
 const STORAGE_KEY = 'boardDB'
 
