@@ -1,5 +1,4 @@
-const fs = require('fs')
-const cars = require('../data/car.json')
+import { storageService } from './async-storage-service.js'
 
 module.exports = {
     query,
@@ -8,15 +7,12 @@ module.exports = {
     save
 }
 
+const STORAGE_KEY = 'boardDB'
 
-import { storageService } from './async-storage-service.js'
-
-const STORAGE_KEY = 'bugDB'
-
-export const bugService = {
+export const boardService = {
     query,
     getById,
-    getEmptyBug,
+    getEmptyBoard,
     save,
     remove,
 }
@@ -25,30 +21,28 @@ function query() {
     return storageService.query(STORAGE_KEY)
 }
 
-function getById(bugId) {
-    return storageService.get(STORAGE_KEY, bugId)
+function getById(boardId) {
+    return storageService.get(STORAGE_KEY, boardId)
 }
 
-function getEmptyBug() {
+function getEmptyBoard() {
     return {
         title: '',
         severity: '',
     }
 }
 
-function remove(bugId) {
-    return storageService.remove(STORAGE_KEY, bugId)
+function remove(boardId) {
+    return storageService.remove(STORAGE_KEY, boardId)
 }
 
-function save(bug) {
-    if (bug._id) {
-        return storageService.put(STORAGE_KEY, bug)
+function save(board) {
+    if (board._id) {
+        return storageService.put(STORAGE_KEY, board)
     } else {
-        return storageService.post(STORAGE_KEY, bug)
+        return storageService.post(STORAGE_KEY, board)
     }
 }
-
-
 
 function _makeId(length = 5) {
     var txt = ''
@@ -57,18 +51,5 @@ function _makeId(length = 5) {
         txt += possible.charAt(Math.floor(Math.random() * possible.length))
     }
     return txt
-}
-
-function _saveCarsToFile() {
-    return new Promise((resolve, reject) => {
-        const content = JSON.stringify(cars, null, 2)
-        fs.writeFile('./data/car.json', content, err => {
-            if (err) {
-                console.error(err)
-                return reject(err)
-            }
-            resolve()
-        })
-    })
 }
 
