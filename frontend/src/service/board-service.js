@@ -1,13 +1,5 @@
 import { storageService } from './async-storage-service.js'
 
-// module.exports = {
-//     query,
-//     getById,
-//     remove,
-//     save
-// }
-
-
 const STORAGE_KEY = 'boardDB'
 
 export const boardService = {
@@ -16,6 +8,7 @@ export const boardService = {
     getEmptyBoard,
     save,
     remove,
+    getTask
 }
 
 function query() {
@@ -54,3 +47,9 @@ function _makeId(length = 5) {
     return txt
 }
 
+function getTask(taskAdress){
+    console.log(taskAdress);
+
+    // return query()
+    // .then(board => )
+}

@@ -9,7 +9,7 @@ export const storageService = {
 if (!localStorage.getItem('boardDB')) _createBoard()
 
 function query(entityType) {
-    var entities = JSON.parse(localStorage.getItem(entityType)) || _createBoard()
+    var entities = JSON.parse(localStorage.getItem(entityType)) || _createBoards()
     return Promise.resolve(entities)
 }
 
@@ -71,8 +71,8 @@ function _makeId(length = 5) {
     return text
 }
 
-function _createBoard() {
-    const board =  {
+function _createBoards() {
+    const boards = [{
         "_id": "b101",
         "title": "Robot dev proj",
         "archivedAt": 1589983468418,
@@ -193,6 +193,7 @@ function _createBoard() {
             }
         ]
     }
-    localStorage.setItem('boardDB', JSON.stringify([board]))
-    return board
+    ]
+    localStorage.setItem('boardDB', JSON.stringify(boards))
+    return boards
 }
