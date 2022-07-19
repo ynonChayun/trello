@@ -1,8 +1,14 @@
-<script setup>
+<template>
+  <div>
+    <router-link to='/board'>go to board list</router-link>
+  </div>
+</template>
+
+<script>
+export default {
+
+}
 </script>
 
-<template>
-  <main>
-    <h1>hi</h1>
-  </main>
-</template>
+<style>
+</style>

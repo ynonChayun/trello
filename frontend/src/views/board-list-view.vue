@@ -1,6 +1,7 @@
 <template>
     <div>
         <h1>hi from board page</h1>
+          <router-link to='/board/b101'>go to only board</router-link>
     </div>
 </template>
 
