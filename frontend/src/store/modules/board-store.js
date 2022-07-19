@@ -1,16 +1,12 @@
 export const boardStore = {
-    state: {
-        board: null,
+  state: {
+    boards: null,
+  },
+  getters: {
+    boards({ boards }) {
+      return boards
     },
-    getters: {
-        currBoard(state) {
-            return state.board;
-        },
-    },
-    mutations: {
-
-    },
-    actions: {
-
-    }
+  },
+  mutations: {},
+  actions: {},
 }

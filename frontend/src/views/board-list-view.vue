@@ -1,15 +1,22 @@
 <template>
-    <div>
-        <h1>hi from board page</h1>
-          <router-link to='/board/b101'>go to only board</router-link>
-    </div>
+  <section class="board-list">
+    <h1>hi from boards page</h1>
+  </section>
 </template>
 
 <script>
+import boardPreview from '../components/board-preview.vue'
 export default {
+  computed: {
+    boards() {
+      return this.$store.getters.currBoard
+    },
+  },
 
+  components: {
+    boardPreview,
+  },
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

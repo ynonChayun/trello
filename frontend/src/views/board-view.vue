@@ -1,4 +1,6 @@
 <template>
+    <router-link to='/board/b101/g101/c101'>go to task details</router-link>
+    <router-view></router-view>
     <div v-if="board">
         <!-- <Container group-name="cols" tag="div" orientation="horizontal">
             <Draggable v-for="(group, idx) in board.groups" :group="group" :key="group.id" :idx="idx">
@@ -10,8 +12,8 @@
                     :get-child-payload="getCardPayload(group.id)" :drop-placeholder="{
                         className:
                             `bg-primary bg-opacity-20  
-                                                                                                                                                                            border-dotted border-2 
-                                                                                                                                                                            border-primary rounded-lg mx-4 my-2`,
+                                                                                                                                                                                                border-dotted border-2 
+                                                                                                                                                                                                border-primary rounded-lg mx-4 my-2`,
                         animationDuration: '200',
                         showOnTop: true
                     }" drag-class="bg-primary dark:bg-primary 
