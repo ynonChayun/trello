@@ -24,7 +24,7 @@
 
 <script>
 import { boardService } from '../service/board-service';
-import searchMultSection from '../components/awsomee-cmps'
+// import searchMultSection from '../components/awsomee-cmps'
 
 export default {
     data() {
