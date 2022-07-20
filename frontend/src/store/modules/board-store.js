@@ -25,6 +25,9 @@ export const boardStore = {
     setBoards(state, { boards }) {
       state.boards = boards
     },
+    setCurrBoard(state, { board }) {
+      state.currBoard = board
+    },
     saveBoard(state, { savedBoard }) {
       const boardIdx = state.boards.findIndex(
         (board) => board._id === savedBoard._id
@@ -57,6 +60,14 @@ export const boardStore = {
       try {
         await boardService.remove(boardId)
         commit({ type: 'deleteBoard', boardId })
+      } catch (err) {
+        throw err
+      }
+    },
+    async getById({ commit }, { boardId }) {
+      try {
+        const board = await boardService.getById(boardId)
+        commit({ type: 'setCurrBoard', board })
       } catch (err) {
         throw err
       }
