@@ -98,7 +98,12 @@ function _createBoards() {
                 "_id": "u101",
                 "fullname": "Tal Tarablus",
                 "imgUrl": "https://www.google.com"
-            }
+            },
+            {
+                "_id": "u102",
+                "fullname": "Ynon Chayun",
+                "imgUrl": "https://www.google.com"
+            },
         ],
         "groups": [
             {
