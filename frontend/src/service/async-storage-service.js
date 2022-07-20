@@ -6,7 +6,7 @@ export const storageService = {
     remove,
 }
 
-// if (!localStorage.getItem('boardDB')) _createBoards()
+if (!localStorage.getItem('boardDB')) _createBoards()
 
 function query(entityType) {
     var entities = JSON.parse(localStorage.getItem(entityType)) || _createBoards()
