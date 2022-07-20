@@ -2,7 +2,7 @@
     <Draggable v-if="task">
         <div
             class="cursor-move my-2 mx-4 rounded-lg shadow-md bg-gray-100 dark:bg-gray-800 hover:border-2 border-primary">
-                <p>{{ task.title }}</p>
+            <p>{{ task.title }}</p>
         </div>
     </Draggable>
 </template>
@@ -18,6 +18,8 @@ export default {
     },
     props: {
         task: Object,
+        boardId: String,
+        groupId: String,
     },
 };
 </script>
