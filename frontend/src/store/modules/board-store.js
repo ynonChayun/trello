@@ -1,12 +1,21 @@
+import { boardService } from '../../service/board-service.js'
+
 export const boardStore = {
-  state: {
-    boards: null,
-  },
-  getters: {
-    boards({ boards }) {
-      return boards
+    state: {
+        boards: null,
+    },
+  
+  mutations: {
+    setBoards(state, { boards }) {
+      state.boards = boards
     },
   },
-  mutations: {},
-  actions: {},
+  actions: {
+    async loadBoards({ commit }) {
+      const boards = await boardService.query()
+      commit({ type: 'setBoards', boards })
+    },
+  },
 }
+
+

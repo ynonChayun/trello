@@ -6,7 +6,11 @@
 </template>
 
 <script>
-export default {}
+export default {
+  created(){
+       this.$store.dispatch({ type: "loadBoards" })
+  }
+}
 </script>
 
 <style>

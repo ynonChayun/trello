@@ -47,9 +47,11 @@ function _makeId(length = 5) {
     return txt
 }
 
-function getTask(taskAdress){
-    console.log(taskAdress);
-
-    // return query()
-    // .then(board => )
+function getTask({ boardId, groupId, taskId }) {
+    return query()
+        .then(boards => {
+            return boards.find(board => board._id === boardId)
+                .groups.find(group => groupId === group.id)
+                .tasks.find(task => task.id === taskId)
+        })
 }
