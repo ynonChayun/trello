@@ -121,9 +121,32 @@ function _createBoards() {
           title: 'Group 2',
           tasks: [
             {
-              id: 'c103',
-              title: 'Do that',
+              _id: 'u101',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'https://www.google.com',
+            },
+            {
+              _id: 'u102',
+              fullname: 'Ynon Chayun',
+              imgUrl: 'https://www.google.com',
+            },
+          ],
+          groups: [
+            {
+              id: 'g101',
+              title: 'Group 1',
               archivedAt: 1589983468418,
+              tasks: [
+                {
+                  id: 'c101',
+                  title: 'Replace logo',
+                },
+                {
+                  id: 'c102',
+                  title: 'Add Samples',
+                },
+              ],
+              style: {},
             },
             {
               id: 'c104',

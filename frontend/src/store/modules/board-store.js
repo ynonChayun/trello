@@ -13,6 +13,12 @@ export const boardStore = {
     currBoard({ currBoard }) {
       return currBoard
     },
+    currLabels({ boards }) {
+      return boards[0].labels
+    },
+    currMembers({ boards }) {
+      return boards[0].members
+    },
   },
 
   mutations: {
