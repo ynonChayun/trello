@@ -1,5 +1,5 @@
 <template>
-    <router-link to='/board/b101/g101/c101'>go to task details</router-link>
+    <router-link to='/board/b101/g102/c104'>go to task details</router-link>
     <router-view></router-view>
     <div v-if="board">
         <!-- <Container @drop="onDrop"> -->

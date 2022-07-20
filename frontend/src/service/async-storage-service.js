@@ -6,8 +6,6 @@ export const storageService = {
     remove,
 }
 
-if (!localStorage.getItem('boardDB')) _createBoard()
-
 function query(entityType) {
     var entities = JSON.parse(localStorage.getItem(entityType)) || _createBoards()
     return Promise.resolve(entities)
