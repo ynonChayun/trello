@@ -4,15 +4,18 @@ export const boardStore = {
     state: {
         boards: null,
     },
-    getters: {
-        boards({ boards }) {
-            return boards
-        },
+  
+  mutations: {
+    setBoards(state, { boards }) {
+      state.boards = boards
     },
-    mutations: {
+  },
+  actions: {
+    async loadBoards({ commit }) {
+      const boards = await boardService.query()
+      commit({ type: 'setBoards', boards })
     },
-    actions: {
-    }
+  },
 }
 
 
