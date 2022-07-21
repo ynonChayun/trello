@@ -119,17 +119,13 @@ export const boardStore = {
       }
     },
     async removeGroup({ commit, state, dispatch }, { groupId }) {
-      console.log('groupId: ' , groupId)
       const board = JSON.parse(JSON.stringify(state.currBoard))
       const idx = board.groups.findIndex((group) => group.id === groupId)
-      console.log('idx: ' , idx)
       board.groups.splice(idx, 1)
-      console.log('board: ' , board)
       try {
         await dispatch('saveBoard', { board });
         commit({ type: 'setCurrBoard', board });
       } catch (err) {
-        console.log('err:', err);
       }
     },
   },
