@@ -1,9 +1,10 @@
 <template>
     <Draggable v-if="task">
-        <div
-            class="cursor-move my-2 mx-4 rounded-lg shadow-md bg-gray-100 dark:bg-gray-800 hover:border-2 border-primary task-preview">
-            <p>{{ task.title }} </p>
-            <button @click.native="removeTask">X</button>
+        <div class="task-preview-container">
+            <div class="task-preview">
+                <p class="task-title">{{ task.title }} </p>
+                <button @click.native="removeTask">X</button>
+            </div>
         </div>
     </Draggable>
 </template>

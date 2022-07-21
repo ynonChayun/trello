@@ -1,5 +1,5 @@
 <template>
-    <section @click="editDescription">
+    <section @click="editDescription" class="editable-text">
         <form v-if="isEditing" @submit.prevent="setText">
             <textarea ref="input" :placeholder="placeholder"></textarea>
             <div>
