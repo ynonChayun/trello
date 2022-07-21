@@ -2,13 +2,12 @@
   <section class="tesk-details-container" v-if="task">
     <!-- <pre>{{task}}</pre> -->
     <input type="text" v-model="task.title" />
-
     <mini-modal @addChecklist="addChecklist" />
 
     <div class="members">
-      members
+      Members
       <ul style="background-color: aliceblue">
-        <li v-for="member in task.memberIds">{{ member }}</li>
+        <li v-for="member in task.members">{{ member.fullname }}</li>
       </ul>
     </div>
 
@@ -44,8 +43,8 @@
     />
 
     <search-list-modal
-      :details="getSearchListDetails('members')"
-      :selects="task.memberIds"
+      @memberClicked="toggleMember"
+      :boardMembers="members"
       v-if="membersModalIsShow"
     />
   </section>
@@ -67,10 +66,11 @@ export default {
       membersModalIsShow: false,
     }
   },
-  created() {
+  async created() {
     this.labels = this.$store.getters.currLabels
     this.members = this.$store.getters.currMembers
-    boardService.getTask(this.$route.params).then((task) => (this.task = task))
+    const task = await boardService.getTask(this.$route.params)
+    this.task = task
   },
   components: {
     searchListModal,
@@ -89,6 +89,17 @@ export default {
     },
     addChecklist(title) {
       console.log(title)
+    },
+    toggleMember(member) {
+      const memberIdx = this.task.members.findIndex(
+        (currMember) => currMember._id === member._id
+      )
+      if (memberIdx === -1) this.task.members.push(member)
+      else {
+        this.task.members = this.task.members.filter(
+          (currMember) => currMember._id !== member._id
+        )
+      }
     },
   },
 }

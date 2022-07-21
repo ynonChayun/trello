@@ -98,6 +98,11 @@ function _createBoards() {
           fullname: 'Tal Tarablus',
           imgUrl: 'https://www.google.com',
         },
+        {
+          _id: 'u102',
+          fullname: 'Ynon Chayun',
+          imgUrl: 'https://www.google.com',
+        },
       ],
       groups: [
         {
@@ -108,6 +113,18 @@ function _createBoards() {
             {
               id: 'c101',
               title: 'Replace logo',
+              members: [
+                {
+                  _id: 'u101',
+                  fullname: 'Tal Tarablus',
+                  imgUrl: 'https://www.google.com',
+                },
+                {
+                  _id: 'u102',
+                  fullname: 'Ynon Chayun',
+                  imgUrl: 'https://www.google.com',
+                },
+              ],
             },
             {
               id: 'c102',
@@ -119,18 +136,6 @@ function _createBoards() {
         {
           id: 'g102',
           title: 'Group 2',
-          tasks: [
-            {
-              _id: 'u101',
-              fullname: 'Tal Tarablus',
-              imgUrl: 'https://www.google.com',
-            },
-            {
-              _id: 'u102',
-              fullname: 'Ynon Chayun',
-              imgUrl: 'https://www.google.com',
-            },
-          ],
           groups: [
             {
               id: 'g101',
