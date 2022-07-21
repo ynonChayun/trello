@@ -1,8 +1,11 @@
 <template>
     <section class="tesk-details-container" v-if="task">
-   
+
         <!-- task title -->
-        <input type="text" v-model="task.title" />
+        <div class="header">
+            <input class="task-title" type="text" v-model="task.title" />
+            <button>x</button>
+        </div>
 
         <div class="members">
             Members
@@ -40,11 +43,12 @@
 
         <checklist-modal @addChecklist="addChecklist" />
 
-        <search-list-modal :details="getSearchListDetails('labels')" :selects="task.labelIds"
-            v-if="lablesModalIsShow" />
+        <!-- <search-list-modal :details="getSearchListDetails('labels')" :selects="task.labelIds"
+            v-if="lablesModalIsShow" /> -->
 
-        <search-list-modal @memberClicked="toggleMember" :boardMembers="members" v-if="membersModalIsShow" />
+        <search-list-modal @memberClicked="toggleMember" :boardMembers="boardMembers" v-if="membersModalIsShow" />
     </section>
+
 </template>
 
 <script>
@@ -56,18 +60,19 @@ import filePicker from '../components/awsome-cmps/file-picker.vue'
 import { boardService } from '../service/board-service'
 
 export default {
+
     data() {
         return {
             task: null,
-            labels: null,
+            boardLabels: null,
+            boardMembers: null,
             lablesModalIsShow: false,
-            members: null,
             membersModalIsShow: false,
         }
     },
     async created() {
-        this.labels = this.$store.getters.currLabels
-        this.members = this.$store.getters.currMembers
+        this.boardLabels = this.$store.getters.boardLabels
+        this.boardMembers = this.$store.getters.boardMembers
         const task = await boardService.getTask(this.$route.params)
         this.task = task
     },
@@ -78,12 +83,6 @@ export default {
         filePicker
     },
     methods: {
-        getSearchListDetails(type) {
-            return {
-                title: type,
-                options: type === 'labels' ? this.labels : this.members,
-            }
-        },
         deleteChecklist(clId) {
             const clIdx = this.task.checklists.findIndex((cl) => cl.id === clId)
             this.task.checklists.splice(clIdx, 1)
@@ -95,12 +94,14 @@ export default {
             const memberIdx = this.task.members.findIndex(
                 (currMember) => currMember._id === member._id
             )
-            if (memberIdx === -1) this.task.members.push(member)
-            else {
+            if (memberIdx === -1) {
+                this.task.members.push(member)
+            } else {
                 this.task.members = this.task.members.filter(
                     (currMember) => currMember._id !== member._id
                 )
             }
+
         },
         setDouDate(date) {
             this.task.douDate = date
@@ -110,24 +111,10 @@ export default {
                 this.task.attachments.push(attachment) :
                 this.task.attachments = [attachment]
         }
-    },
+
+    }
 }
 </script>
 
 <style>
-.tesk-details-container {
-    z-index: 2;
-    width: 500px;
-    height: 500px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%);
-    background-color: lightgreen;
-}
-
-.tesk-details-container div {
-    background-color: lightgrey;
-    border: 1px solid black;
-}
 </style>

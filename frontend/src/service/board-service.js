@@ -3,16 +3,16 @@ import { storageService } from './async-storage-service.js'
 const STORAGE_KEY = 'boardDB'
 
 export const boardService = {
-    query,
-    getById,
-    getEmptyBoard,
-    save,
-    remove,
-    getTask,
-    getEmptyTask,
-    getEmptyGroup,
-    _makeId,
-    saveTask,
+  query,
+  getById,
+  getEmptyBoard,
+  save,
+  remove,
+  getTask,
+  getEmptyTask,
+  getEmptyGroup,
+  _makeId,
+  saveTask,
 }
 
 function query() {
@@ -43,25 +43,25 @@ function save(board) {
 }
 
 function getEmptyTask() {
-    return {
-        title: '',
-        description: '',
-        attachments: [],
-        checklists: [],
-        members: [],
-        style: {
-            coverColor: '',
-            coverImg: '',
-        },
-    };
+  return {
+    title: '',
+    description: '',
+    attachments: [],
+    checklists: [],
+    members: [],
+    style: {
+      coverColor: '',
+      coverImg: '',
+    },
+  }
 }
 
 function getEmptyGroup() {
-    return {
-        title: '',
-        tasks: [],
-        style: {},
-      };
+  return {
+    title: '',
+    tasks: [],
+    style: {},
+  }
 }
 
 function _makeId(length = 5) {
@@ -79,6 +79,7 @@ function saveTask(boardId, groupId, task, activity) {
   const group = board.groups.find((group) => group._id === groupId)
   const taskIdx = group.tasks.findIndex((currTask) => currTask._id === task._id)
   group.tasks[taskIdx] = task
+  console.log(getById(boardId))
 
   // TODO: find the task, and update
   //   board.activities.unshift(activity)
