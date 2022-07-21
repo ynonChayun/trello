@@ -1,8 +1,9 @@
 <template>
     <Draggable v-if="task">
         <div
-            class="cursor-move my-2 mx-4 rounded-lg shadow-md bg-gray-100 dark:bg-gray-800 hover:border-2 border-primary">
-            <p>{{ task.title }}</p>
+            class="cursor-move my-2 mx-4 rounded-lg shadow-md bg-gray-100 dark:bg-gray-800 hover:border-2 border-primary task-preview">
+            <p>{{ task.title }} </p>
+            <button @click.native="removeTask">X</button>
         </div>
     </Draggable>
 </template>
@@ -21,5 +22,11 @@ export default {
         boardId: String,
         groupId: String,
     },
+    methods: {
+        removeTask() {
+            const id = this.task.id
+            this.$emit('removeTask', id)
+        }
+    }
 };
 </script>

@@ -8,7 +8,10 @@ export const boardService = {
     getEmptyBoard,
     save,
     remove,
-    getTask
+    getTask,
+    getEmptyTask,
+    getEmptyGroup,
+    _makeId,
 }
 
 function query() {
@@ -36,6 +39,28 @@ function save(board) {
     } else {
         return storageService.post(STORAGE_KEY, board)
     }
+}
+
+function getEmptyTask() {
+    return {
+        title: '',
+        description: '',
+        attachments: [],
+        checklists: [],
+        members: [],
+        style: {
+            coverColor: '',
+            coverImg: '',
+        },
+    };
+}
+
+function getEmptyGroup() {
+    return {
+        title: '',
+        tasks: [],
+        style: {},
+      };
 }
 
 function _makeId(length = 5) {

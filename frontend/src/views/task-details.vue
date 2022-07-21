@@ -55,42 +55,42 @@
 import searchListModal from '../components/search-list-modal.vue'
 import miniModal from '../components/awsome-cmps/mini-modal.vue'
 
-import { boardService } from '../service/board-service';
+import { boardService } from '../service/board-service'
 
 export default {
-    data() {
-        return {
-            task: null,
-            labels: null,
-            lablesModalIsShow: false,
-            members: null,
-            membersModalIsShow: false,
-        }
-    },
-    created() {
-        this.labels = this.$store.getters.currLabels
-        this.members = this.$store.getters.currMembers
-        boardService.getTask(this.$route.params).then(task => this.task = task)
-    },
-    components: {
-        searchListModal,
-        miniModal
-    },
-    methods: {
-        getSearchListDetails(type) {
-            return {
-                title: type,
-                options: type === 'labels' ? this.labels : this.members
-            }
-        },
-        deleteChecklist(clId) {
-            const clIdx = this.task.checklists.findIndex(cl => cl.id === clId)
-            this.task.checklists.splice(clIdx, 1)
-        },
-        addChecklist(title) {
-            console.log(title);
-        }
+  data() {
+    return {
+      task: null,
+      labels: null,
+      lablesModalIsShow: false,
+      members: null,
+      membersModalIsShow: false,
     }
+  },
+  created() {
+    this.labels = this.$store.getters.currLabels
+    this.members = this.$store.getters.currMembers
+    boardService.getTask(this.$route.params).then((task) => (this.task = task))
+  },
+  components: {
+    searchListModal,
+    miniModal,
+  },
+  methods: {
+    getSearchListDetails(type) {
+      return {
+        title: type,
+        options: type === 'labels' ? this.labels : this.members,
+      }
+    },
+    deleteChecklist(clId) {
+      const clIdx = this.task.checklists.findIndex((cl) => cl.id === clId)
+      this.task.checklists.splice(clIdx, 1)
+    },
+    addChecklist(title) {
+      console.log(title)
+    },
+  },
 }
 </script>
 

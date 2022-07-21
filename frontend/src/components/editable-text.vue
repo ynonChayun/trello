@@ -1,10 +1,10 @@
 <template>
     <section @click="editDescription">
         <form v-if="isEditing" @submit.prevent="setText">
-            <textarea ref="input" :value="value" :placeholder="placeholder"></textarea>
+            <textarea ref="input" :placeholder="placeholder"></textarea>
             <div>
                 <button>Save</button>
-                <button type="button" @click.stop="closeTextarea" >x</button>
+                <button type="button" @click.stop="closeTextarea">x</button>
             </div>
         </form>
         <template v-else>
@@ -21,6 +21,7 @@ export default {
     props: {
         isEditFirst: Boolean,
         type: "",
+        title: String,
         value: String,
         elementType: String,
     },
@@ -38,18 +39,13 @@ export default {
         },
         setText() {
             const val = this.$refs.input.value;
-            this.$emit("input", val);
+            this.$emit("addTask", val);
             this.closeTextarea();
         },
         closeTextarea() {
             this.isEditing = false;
             this.$emit("close-textarea");
         },
-        // computedClass() {
-        //     var str = "editable-text";
-        //     str += this.isEditing ? " open" : " closed";
-        //     return str;
-        // },
     },
     computed: {
         placeholder() {

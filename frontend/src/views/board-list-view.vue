@@ -9,6 +9,7 @@
       <router-link
         v-for="board in boards"
         :to="`/board/${board._id}`"
+        :board="board"
         :key="board._id"
         class="board-preview"
         >{{ board.title }}

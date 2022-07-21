@@ -1,42 +1,82 @@
 <template>
-    <!-- <router-link to="/board/b101/g102/c104">go to task details</router-link> -->
     <router-view></router-view>
-    <div v-if="board" class="board main-content">
+    <div v-if="board" class="board">
         <Container @drop="onColumnDrop($event)" group-name="cols" tag="div" orientation="horizontal">
             <Draggable v-for="(group, idx) in board.groups" :key="group.id">
                 <div>
-                    <group-preview :key="group.id" :group="group" :boardId="board._id" :idx="idx" :board="board" />
+                    <group-preview @saveBoard="saveBoard" :key="group.id" :group="group" :boardId="board._id" :idx="idx"
+                        :board="board" />
                 </div>
             </Draggable>
-            <h1></h1>
+            <div class="add-new-group">
+                <button v-if="!isAddNewGroup" @click="isAddNewGroup = true" class="group-addition">
+                    + Add another list
+                </button>
+                <editable-text v-else v-model="newGroup.title" :type="'title'" :isEditFirst="true"
+                    :elementType="'group'" @close-textarea="isAddNewGroup = false" @addTask="addGroup" />
+            </div>
+
         </Container>
     </div>
+    <!-- <div v-if="currBoard" class="board">
+        <Container @drop="onColumnDrop($event)" group-name="cols" tag="div" orientation="horizontal">
+            <Draggable v-for="(group, idx) in board.groups" :key="group.id">
+                <div>
+                    <group-preview @saveBoard="saveBoard" :key="group.id" :group="group" :boardId="board._id" :idx="idx"
+                        :board="board" />
+                </div>
+            </Draggable>
+            <div class="add-new-group">
+                <button v-if="!isAddNewGroup" @click="isAddNewGroup = true" class="group-addition">
+                    + Add another list
+                </button>
+                <editable-text v-else v-model="newGroup.title" :type="'title'" :isEditFirst="true"
+                    :elementType="'group'" @close-textarea="isAddNewGroup = false" @input="addGroup" />
+            </div>
+
+        </Container>
+    </div> -->
 </template>
 
 <script>
 import { boardService } from '../service/board-service'
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import { applyDrag } from '../service/helpers.js'
-import taskPreview from '../components/task-preview.vue'
 import groupPreview from '../components/group-preview.vue'
+import editableText from '../components/editable-text.vue'
 
 export default {
     name: 'board-view',
     components: {
         Container,
         Draggable,
-        taskPreview,
         groupPreview,
+        editableText,
     },
-
     data() {
         return {
-            board: null,
+            // currBoard: null,
+            isAddNewGroup: false,
+            newGroup: JSON.parse(JSON.stringify(this.$store.getters.getEmptyGroup)),
         }
     },
     async created() {
         const { boardId } = this.$route.params
-        this.board = await boardService.getById(boardId)
+        await this.$store.dispatch({ type: "getById", boardId })
+        // this.currBoard = this.board
+        // 
+        // this.board = await boardService.getById(boardId)
+        // await this.$store.dispatch({ type: "getById", boardId})
+        // console.log('this.board: ' , this.board)
+        // await this.$store.dispatch({ type: "getById", boardId})
+        // try {
+        //     const { boardId } = this.$route.params
+        //     const currBoard = await this.$store.dispatch({ type: 'getById', boardId })
+        //     this.board = currBoard
+        // } catch (err) {
+        //     console.log('Cannot load board', err)
+        //     throw err
+        // }
     },
     methods: {
         goToEdit(groupId, taskId) {
@@ -45,37 +85,33 @@ export default {
         },
         onColumnDrop(dropResult) {
             const board = Object.assign({}, this.board)
-            console.log('board: ', board)
             board.groups = applyDrag(board.groups, dropResult)
-            this.board = board
-            // this.saveBoard(board)
+            this.saveBoard(board)
         },
         getCardPayload(groupId) {
             return (index) => {
-                return this.board.groups.filter((p) => p.id === groupId)[0].tasks[index]
+                return this.currBoard.groups.filter((p) => p.id === groupId)[0].tasks[index]
             }
         },
-        async onCardDrop(currGroup, dropResult) {
-            if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-                const board = Object.assign({}, this.board)
-                const group = currGroup
-                console.log('group: ', group)
-                const itemIndex = board.groups.indexOf(group)
-                const newColumn = Object.assign({}, group)
+        async saveBoard(board) {
+            await this.$store.dispatch({ type: "saveBoard", board })
+        },
+        async addGroup(val) {
+            this.newGroup.title = val
+            if (!this.newGroup.title) return;
+            // this.newGroup.board = { id: this.board._id };
+            await this.$store.dispatch({ type: "saveGroup", group: this.newGroup });
+            this.newGroup = JSON.parse(
+                JSON.stringify(this.$store.getters.getEmptyGroup)
+            );
+            this.isAddNewGroup = false;
+        },
 
-                newColumn.tasks = await applyDrag(newColumn.tasks, dropResult)
-                board.groups.splice(itemIndex, 1, newColumn)
-                this.board = board
-            }
-        },
-        // async saveBoard(board) {
-        //     await this.$store.dispatch({ type: "saveBoard", board: board })
-        // }
     },
     computed: {
-        // board() {
-        //     this.$store.getters.currBoard
-        // }
+        board() {
+            return this.$store.getters.currBoard
+        }
     },
     unmounted() { },
 }
@@ -86,6 +122,106 @@ export default {
     display: flex !important;
 }
 </style>
+
+<!-- <template>
+    <router-view></router-view>
+    <div v-if="currBoard" class="board">
+        <Container @drop="onColumnDrop($event)" group-name="cols" tag="div" orientation="horizontal">
+            <Draggable v-for="(group, idx) in currBoard.groups" :key="group.id">
+                <div>
+                    <group-preview @saveBoard="saveBoard" :key="group.id" :group="group" :boardId="currBoard._id"
+                        :idx="idx" :board="currBoard" />
+                </div>
+            </Draggable>
+            <div class="add-new-group">
+                <button v-if="!isAddNewGroup" @click="isAddNewGroup = true" class="group-addition">
+                    + Add another list
+                </button>
+                <editable-text v-else v-model="newGroup.title" :type="'title'" :isEditFirst="true"
+                    :elementType="'group'" @close-textarea="isAddNewGroup = false" @input="addGroup" />
+            </div>
+
+        </Container>
+    </div>
+</template>
+
+<script>
+import { boardService } from '../service/board-service'
+import { Container, Draggable } from 'vue3-smooth-dnd'
+import { applyDrag } from '../service/helpers.js'
+import groupPreview from '../components/group-preview.vue'
+import editableText from '../components/editable-text.vue'
+
+export default {
+    name: 'board-view',
+    components: {
+        Container,
+        Draggable,
+        groupPreview,
+        editableText,
+    },
+    data() {
+        return {
+            currBoard: null,
+            isAddNewGroup: false,
+            newGroup: JSON.parse(JSON.stringify(this.$store.getters.getEmptyGroup)),
+        }
+    },
+    async created() {
+        const { boardId } = this.$route.params
+        await this.$store.dispatch({ type: "getById", boardId })
+        this.currBoard = this.board
+        
+        this.board = await boardService.getById(boardId)
+        await this.$store.dispatch({ type: "getById", boardId})
+        console.log('this.board: ' , this.board)
+        await this.$store.dispatch({ type: "getById", boardId})
+        try {
+            const { boardId } = this.$route.params
+            const currBoard = await this.$store.dispatch({ type: 'getById', boardId })
+            this.board = currBoard
+        } catch (err) {
+            console.log('Cannot load board', err)
+            throw err
+        }
+    },
+    methods: {
+        goToEdit(groupId, taskId) {
+            this.$router.push(`/board/${this.board._id}/${groupId}/${taskId}`)
+            console.log('groupId: ')
+        },
+        onColumnDrop(dropResult) {
+            const board = Object.assign({}, this.currBoard)
+            console.log('board: ', board)
+            board.groups = applyDrag(board.groups, dropResult)
+            this.currBoard = board
+            this.saveBoard(board)
+        },
+        getCardPayload(groupId) {
+            return (index) => {
+                return this.currBoard.groups.filter((p) => p.id === groupId)[0].tasks[index]
+            }
+        },
+        async saveBoard(board) {
+            await this.$store.dispatch({ type: "saveBoard", board })
+            this.currBoard = this.$store.getters.currBoard
+        }
+
+    },
+    computed: {
+        board() {
+            return this.$store.getters.currBoard
+        }
+    },
+    unmounted() { },
+}
+</script>
+
+<style>
+.smooth-dnd-container.horizontal {
+    display: flex !important;
+}
+</style> -->
 
                     <!-- {{ group.title }}
                     <Container orientation="vertical" group-name="col-items" :shouldAcceptDrop="
