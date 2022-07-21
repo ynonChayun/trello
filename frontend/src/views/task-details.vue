@@ -1,8 +1,10 @@
 <template>
-  <section class="tesk-details-container" v-if="task">
+  <section class="task-details-container" v-if="task">
     <!-- <pre>{{task}}</pre> -->
-    <input type="text" v-model="task.title" />
-    <mini-modal @addChecklist="addChecklist" />
+    <div class="header">
+      <input class="task-title" type="text" v-model="task.title" />
+      <button>x</button>
+    </div>
 
     <div class="members">
       Members
@@ -10,6 +12,7 @@
         <li v-for="member in task.members">{{ member.fullname }}</li>
       </ul>
     </div>
+    <mini-modal @addChecklist="addChecklist" />
 
     <div class="labels">
       labels
@@ -44,7 +47,7 @@
 
     <search-list-modal
       @memberClicked="toggleMember"
-      :boardMembers="members"
+      :boardMembers="boardMembers"
       v-if="membersModalIsShow"
     />
   </section>
@@ -60,15 +63,15 @@ export default {
   data() {
     return {
       task: null,
-      labels: null,
+      boardLabels: null,
+      boardMembers: null,
       lablesModalIsShow: false,
-      members: null,
       membersModalIsShow: false,
     }
   },
   async created() {
-    this.labels = this.$store.getters.currLabels
-    this.members = this.$store.getters.currMembers
+    this.boardLabels = this.$store.getters.boardLabels
+    this.boardMembers = this.$store.getters.boardMembers
     const task = await boardService.getTask(this.$route.params)
     this.task = task
   },
@@ -80,7 +83,7 @@ export default {
     getSearchListDetails(type) {
       return {
         title: type,
-        options: type === 'labels' ? this.labels : this.members,
+        options: type === 'labels' ? this.boardLabels : this.boardMembers,
       }
     },
     deleteChecklist(clId) {
@@ -94,8 +97,9 @@ export default {
       const memberIdx = this.task.members.findIndex(
         (currMember) => currMember._id === member._id
       )
-      if (memberIdx === -1) this.task.members.push(member)
-      else {
+      if (memberIdx === -1) {
+        this.task.members.push(member)
+      } else {
         this.task.members = this.task.members.filter(
           (currMember) => currMember._id !== member._id
         )
@@ -105,19 +109,4 @@ export default {
 }
 </script>
 
-<style>
-.tesk-details-container {
-  z-index: 2;
-  width: 500px;
-  height: 500px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%);
-  background-color: lightgreen;
-}
-.tesk-details-container div {
-  background-color: lightgrey;
-  border: 1px solid black;
-}
-</style>
+<style></style>
