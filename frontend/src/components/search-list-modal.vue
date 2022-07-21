@@ -1,30 +1,37 @@
 <template>
-    <input type="text">
-    <p>{{ details.title }}</p>
-    <ul>
-        <li v-for="option in details.options">
-            <button @click="chooseOption(isLabels ? option.id : option._id)">
-                {{ isLabels ? option.title : option.fullname }}</button>
-        </li>
-    </ul>
+  <input type="text" />
+  <p>Members</p>
+  <input
+    @input="$emit('filter', filterByTxt)"
+    type="search"
+    v-model="filterByTxt"
+    placeholder="Search members"
+  />
+  <ul>
+    <li
+      @click="$emit('memberClicked', member)"
+      v-for="member in boardMembers"
+      :key="member._id"
+    >
+      {{ member.fullname }}
+    </li>
+  </ul>
 </template>
 
 <script>
 export default {
-    props: ['details', 'selects'],
-    methods: {
-        chooseOption(selectId) {
-            const selectIdx = this.selects.findIndex(select => select === selectId)
-            selectIdx === -1 ? this.selects.push(selectId) : this.selects.splice(selectIdx, 1)
-        }
-    },
-    computed : {
-        isLabels(){
-            return this.details.title === 'labels' ? true : false
-        }
+  data() {
+    return {
+      filterByTxt: '',
     }
+  },
+
+  props: {
+    boardMembers: Array,
+  },
+
+  emits: ['memberClicked', 'filter'],
 }
 </script>
 
-<style>
-</style>
+<style></style>

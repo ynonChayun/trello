@@ -2,13 +2,12 @@
   <section class="tesk-details-container" v-if="task">
     <!-- <pre>{{task}}</pre> -->
     <input type="text" v-model="task.title" />
-
     <mini-modal @addChecklist="addChecklist" />
 
     <div class="members">
-      members
+      Members
       <ul style="background-color: aliceblue">
-        <li v-for="member in task.memberIds">{{ member }}</li>
+        <li v-for="member in task.members">{{ member.fullname }}</li>
       </ul>
     </div>
 
@@ -44,8 +43,8 @@
     />
 
     <search-list-modal
-      :details="getSearchListDetails('members')"
-      :selects="task.memberIds"
+      @memberClicked="toggleMember"
+      :boardMembers="members"
       v-if="membersModalIsShow"
     />
   </section>
@@ -55,44 +54,55 @@
 import searchListModal from '../components/search-list-modal.vue'
 import miniModal from '../components/awsome-cmps/mini-modal.vue'
 
-import { boardService } from '../service/board-service';
+import { boardService } from '../service/board-service'
 
 export default {
-    data() {
-        return {
-            task: null,
-            labels: null,
-            lablesModalIsShow: false,
-            members: null,
-            membersModalIsShow: false,
-        }
-    },
-    created() {
-        this.labels = this.$store.getters.currLabels
-        this.members = this.$store.getters.currMembers
-        boardService.getTask(this.$route.params).then(task => this.task = task)
-    },
-    components: {
-        searchListModal,
-        miniModal
-    },
-    methods: {
-        getSearchListDetails(type) {
-            return {
-                title: type,
-                options: type === 'labels' ? this.labels : this.members
-            }
-        },
-        deleteChecklist(clId) {
-            const clIdx = this.task.checklists.findIndex(cl => cl.id === clId)
-            this.task.checklists.splice(clIdx, 1)
-        },
-        addChecklist(title) {
-            console.log(title);
-        }
+  data() {
+    return {
+      task: null,
+      labels: null,
+      lablesModalIsShow: false,
+      members: null,
+      membersModalIsShow: false,
     }
-  }
-
+  },
+  async created() {
+    this.labels = this.$store.getters.currLabels
+    this.members = this.$store.getters.currMembers
+    const task = await boardService.getTask(this.$route.params)
+    this.task = task
+  },
+  components: {
+    searchListModal,
+    miniModal,
+  },
+  methods: {
+    getSearchListDetails(type) {
+      return {
+        title: type,
+        options: type === 'labels' ? this.labels : this.members,
+      }
+    },
+    deleteChecklist(clId) {
+      const clIdx = this.task.checklists.findIndex((cl) => cl.id === clId)
+      this.task.checklists.splice(clIdx, 1)
+    },
+    addChecklist(title) {
+      console.log(title)
+    },
+    toggleMember(member) {
+      const memberIdx = this.task.members.findIndex(
+        (currMember) => currMember._id === member._id
+      )
+      if (memberIdx === -1) this.task.members.push(member)
+      else {
+        this.task.members = this.task.members.filter(
+          (currMember) => currMember._id !== member._id
+        )
+      }
+    },
+  },
+}
 </script>
 
 <style>
