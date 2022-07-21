@@ -1,22 +1,24 @@
 <template>
     <router-view></router-view>
-    <div v-if="board" class="board">
-        <Container @drop="onColumnDrop($event)" group-name="cols" tag="div" orientation="horizontal">
-            <Draggable v-for="(group, idx) in board.groups" :key="group.id">
-                <div>
-                    <group-preview @saveBoard="saveBoard" :key="group.id" :group="group" :boardId="board._id" :idx="idx"
-                        :board="board" />
+    <div v-if="board" class="board-canvas">
+        <div class="board-fixed-container">
+            <Container @drop="onColumnDrop($event)" group-name="cols" tag="div" orientation="horizontal">
+                <Draggable v-for="(group, idx) in board.groups" :key="group.id">
+                    <div>
+                        <group-preview @saveBoard="saveBoard" :key="group.id" :group="group" :boardId="board._id"
+                            :idx="idx" :board="board" />
+                    </div>
+                </Draggable>
+                <div class="add-new-group">
+                    <button v-if="!isAddNewGroup" @click="isAddNewGroup = true" class="group-addition">
+                        + Add another list
+                    </button>
+                    <editable-text v-else v-model="newGroup.title" :type="'title'" :isEditFirst="true"
+                        :elementType="'group'" @close-textarea="isAddNewGroup = false" @addTask="addGroup" />
                 </div>
-            </Draggable>
-            <div class="add-new-group">
-                <button v-if="!isAddNewGroup" @click="isAddNewGroup = true" class="group-addition">
-                    + Add another list
-                </button>
-                <editable-text v-else v-model="newGroup.title" :type="'title'" :isEditFirst="true"
-                    :elementType="'group'" @close-textarea="isAddNewGroup = false" @addTask="addGroup" />
-            </div>
 
-        </Container>
+            </Container>
+        </div>
     </div>
     <!-- <div v-if="currBoard" class="board">
         <Container @drop="onColumnDrop($event)" group-name="cols" tag="div" orientation="horizontal">

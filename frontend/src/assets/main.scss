@@ -11,24 +11,12 @@
 // YUVAL SCSS
 .group {
     background-color: #ebecf0;
+    border-radius: 3px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     max-height: 100%;
-    width: 272px;
-    min-width: 272px;
-    border-radius: 3px;
-
-    .group-header {
-        padding: 10px 8px;
-
-        .editable-title {
-            font-size: 14px;
-        }
-    }
-}
-
-.task-preview {
-    margin: 8px auto;
-    background-color: #fff;
-    width: 96%;
+    position: relative;
+    white-space: normal;
+    width: 100% !important;
 }
