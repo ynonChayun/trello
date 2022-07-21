@@ -91,12 +91,8 @@ export default {
             console.log(title);
         }
     }
-  },
-  created() {
-    boardService.getTask(this.$route.params).then((task) => (this.task = task))
-  },
-  components: {},
-}
+  }
+
 </script>
 
 <style>
