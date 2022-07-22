@@ -1,26 +1,45 @@
 <template>
-    <router-view></router-view>
-    <div v-if="board" class="board-canvas">
-        <div class="board-fixed-container">
-            <Container @drop="onColumnDrop($event)" group-name="cols" tag="div" orientation="horizontal">
-                <Draggable v-for="(group, idx) in board.groups" :key="group.id">
-                    <div>
-                        <group-preview @saveBoard="saveBoard" :key="group.id" :group="group" :boardId="board._id"
-                            :idx="idx" :board="board" />
-                    </div>
-                </Draggable>
-                <div class="add-new-group">
-                    <button v-if="!isAddNewGroup" @click="isAddNewGroup = true" class="group-addition">
-                        + Add another list
-                    </button>
-                    <editable-text v-else v-model="newGroup.title" :type="'title'" :isEditFirst="true"
-                        :elementType="'group'" @close-textarea="isAddNewGroup = false" @addTask="addGroup" />
-                </div>
+    <section class="board-view">
+        <router-view></router-view>
+        <div v-if="board" class="board-canvas">
+            <div class="board-fixed-container">
+                <Container @drop="onColumnDrop($event)" group-name="cols" tag="div" orientation="horizontal">
+                    <Draggable v-for="(group, idx) in board.groups" :key="group.id">
+                        <div>
+                            <group-preview class="group-container" @saveBoard="saveBoard" :key="group.id" :group="group"
+                                :boardId="board._id" :idx="idx" :board="board" />
+                        </div>
+                    </Draggable>
+                    <div class="add-new-group">
+                        <button v-if="!isAddNewGroup" @click="isAddNewGroup = true" class="group-addition">
 
-            </Container>
+                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
+                                class="icon" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                <path fill="none" stroke="#FFFFFF" stroke-width="2" d="M12,22 L12,2 M2,12 L22,12">
+                                </path>
+                            </svg>
+                            &nbsp;
+                            Add another list
+
+                        </button>
+                        <form v-else class="group-preview">
+                            <input class="input-title" v-model="newGroup.title" type="text" @change="addGroup"
+                                placeholder="Enter list title" />
+
+                            <div class="save-list-actions">
+                                <button class="save-button" @click.prevent="addGroup">Add list</button>
+                                <svg @click="undoAddList" stroke="currentColor" fill="currentColor" stroke-width="0"
+                                    viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="none" stroke="#000" stroke-width="2" d="M3,3 L21,21 M3,21 L21,3"></path>
+                                </svg>
+                            </div>
+                        </form>
+                    </div>
+
+                </Container>
+            </div>
         </div>
-    </div>
-    <!-- <div v-if="currBoard" class="board">
+        <!-- <div v-if="currBoard" class="board">
         <Container @drop="onColumnDrop($event)" group-name="cols" tag="div" orientation="horizontal">
             <Draggable v-for="(group, idx) in board.groups" :key="group.id">
                 <div>
@@ -38,6 +57,7 @@
 
         </Container>
     </div> -->
+    </section>
 </template>
 
 <script>
@@ -108,6 +128,9 @@ export default {
             );
             this.isAddNewGroup = false;
         },
+        undoAddList(){
+
+        }
 
     },
     computed: {

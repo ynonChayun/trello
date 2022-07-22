@@ -31,8 +31,7 @@ export default {
 
   methods: {
     saveBoard() {
-     let board = JSON.parse(JSON.stringify(this.newBoard))
-      this.$store.dispatch({ type: 'saveBoard', board })
+      this.$store.dispatch({ type: 'saveBoard', board: this.newBoard })
     },
     deleteBoard(boardId) {
       this.$store.dispatch({ type: 'deleteBoard', boardId })

@@ -1,9 +1,9 @@
 <template>
     <div class="editable-title-wrapper" ref="wrapper">
-        <h2 v-if="title" class="editable-title" contenteditable="true" @blur="onBlur" @focus="toggleWrapperFocus"
+        <p v-if="title" class="editable-title" contenteditable="true" @blur="onBlur" @focus="toggleWrapperFocus"
             ref="title" spellcheck="false">
             {{ str }}
-        </h2>
+        </p>
     </div>
 </template>
 
