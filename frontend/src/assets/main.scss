@@ -5,6 +5,9 @@
 @import 'cmps/task-details';
 
 // CMPS
+@import 'cmps/app-header';
+@import 'cmps/task-screen';
+@import 'cmps/popup';
 
 // YUVAL SCSS
 .group {
@@ -21,6 +24,3 @@
 
 
 
-
-@import 'cmps/popup';
-@import 'cmps/task-screen'
