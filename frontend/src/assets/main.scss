@@ -5,10 +5,10 @@
 @import 'cmps/task-details';
 
 // CMPS
-@import 'cmps/group-preview.scss';
-@import 'cmps/task-preview.scss';
-// VIEWS
-@import 'views/board-view.scss';
+@import 'cmps/app-header';
+@import 'cmps/task-screen';
+@import 'cmps/popup';
+@import 'cmps/group-preview';
 
 .app {
   height: 100vh;
