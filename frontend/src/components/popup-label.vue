@@ -1,47 +1,29 @@
 <template>
-  <div
-    v-if="!isPopupEdit"
-    class="popup popup-label"
-    ref="popupLabel"
-  >
+  <div v-if="!isPopupEdit" class="popup popup-label" ref="popupLabel">
     <div slot="header" class="task-popup-header">
       <h2>Labels</h2>
-      <button @click="togglePopupLabel()" class="btn close icon x"></button>
+      <button @click="togglePopupLabel()">x</button>
     </div>
+
     <div slot="main">
-      <input
-        type="search"
-        v-model="searchStr"
-        placeholder="Search labels..."
-        class="search-label"
-      />
-      <ul v-if="boardLabels" class="clean-list label-list">
-        <li
-          v-for="label in boardLabels"
-          :key="label.id"
-          class="flex align-center label-preview"
-        >
-          <button
-            @click="toggleSelectLabel(label.id)"
-            :style="'background-color:' + label.color + ';color:$clr1;'"
-            :class="{ 'label-in-use': isUsed(label.id) }"
-            class="btn label label-color"
-          >
+      <input type="search" v-model="searchStr" placeholder="Search labels..." class="search-label" />
+      <ul v-if="boardLabels" class="clean-list label-list ">
+
+        <li v-for="label in boardLabels" :key="label.id" class="flex justify-between label items-center gap-1" >
+          <span @click="toggleSelectLabel(label.id)" :class="{ 'label-in-use': isUsed(label.id) }" :style="{
+          backgroundColor: label.color}" class="label-title">
             {{ label.title }}
             <span v-if="isUsed(label.id)" class="icon v"></span>
-          </button>
-          <button
-            @click="openLabelEdit($event, 'Change', label)"
-            class="btn edit-label icon pencil"
-          ></button>
+          </span>
+          <img class="edit-svg" @click="openLabelEdit($event, 'Change', label)" src="../svgs/edit.svg" alt="">
+          <!-- <span @click="openLabelEdit($event, 'Change', label)" class="">EDIT</span> -->
         </li>
+
       </ul>
-      <button
-        @click="openLabelEdit($event, 'Create')"
-        class="btn neutral wide create-label"
-      >
+
+      <span @click="openLabelEdit($event, 'Create')" class="">
         Create a new label
-      </button>
+      </span>
     </div>
   </div>
   <!-- <popup-label-edit
@@ -122,13 +104,11 @@ export default {
     },
   },
   mounted() {
-    const boundingRect = this.$refs.popupLabel.$el.getBoundingClientRect();
-    this.leftPos = boundingRect.left + "px";
-    this.topPos = boundingRect.top + "px";
   },
   computed: {
     boardLabels() {
       const boardLabels = this.$store.getters.currBoard.labels;
+      console.log('boardkabels: ', boardLabels)
       return boardLabels.filter((label) => {
         // console.log("label:", label);
         return label.title.toLowerCase().includes(this.searchStr.toLowerCase());
