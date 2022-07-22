@@ -5,19 +5,22 @@
 @import 'cmps/task-details';
 
 // CMPS
-@import 'cmps/group-preview.scss';
-@import 'cmps/task-preview.scss';
-// VIEWS
-@import 'views/board-view.scss';
+@import 'cmps/app-header';
+@import 'cmps/task-screen';
+@import 'cmps/popup';
 
-.app {
-  height: 100vh;
+// YUVAL SCSS
+.group {
+  background-color: #ebecf0;
+  border-radius: 3px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  // grid-template-rows: 2rem 11px 1fr;
+  max-height: 100%;
+  position: relative;
+  white-space: normal;
+  width: 100% !important;
 }
 
-.app header {
-  padding: 6px 4px;
-  height: 44px;
-}
+
+
