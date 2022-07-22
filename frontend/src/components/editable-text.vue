@@ -39,7 +39,6 @@ export default {
         },
         setText() {
             const val = this.$refs.input.value;
-            console.log('val: ' , val)
             this.$emit("addTask", val);
             this.closeTextarea();
         },
