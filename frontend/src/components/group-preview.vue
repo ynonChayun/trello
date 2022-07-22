@@ -87,7 +87,7 @@ export default {
             });
         },
         async addTask(val) {
-            this.newTask.title = val
+            // this.newTask.title = val
             if (!this.newTask.title) return;
             await this.$store.dispatch({
                 type: "saveTask",
