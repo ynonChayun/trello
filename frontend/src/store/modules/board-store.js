@@ -58,6 +58,7 @@ export const boardStore = {
     },
     async saveBoard({ commit }, { board }) {
       try {
+        console.log('board new', board)
         const savedBoard = await boardService.save(board)
         console.log('savedBoard: ', savedBoard)
         commit({ type: 'saveBoard', savedBoard })
@@ -119,6 +120,7 @@ export const boardStore = {
       try {
         await dispatch('saveBoard', { board })
         commit({ type: 'setCurrBoard', board })
+        return
       } catch (err) {
         console.log('err:', err)
       }
