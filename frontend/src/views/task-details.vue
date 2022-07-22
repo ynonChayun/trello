@@ -1,5 +1,5 @@
 <template>
-    <section class="tesk-details-container" v-if="task">
+    <section class="task-details-container" v-if="task">
 
         <!-- task title -->
         <div class="header">

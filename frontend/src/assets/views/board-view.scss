@@ -1,0 +1,32 @@
+
+.board-view {
+    background-color: lightblue;
+    flex-grow: 1;
+    margin: .5rem 0 .5rem 1rem;
+  }
+  
+  
+  .add-new-group {
+    height: fit-content;
+  
+    & button {
+      height: 42px;
+      padding: 11px 8px;
+      background-color: #ffffff3d;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+  
+      transition: background-color 85ms ease-in;
+      color: white;
+      width: 250px;
+      text-align: start;
+      border-radius: 3px;
+  
+    }
+  
+    &:hover {
+      background-color: #ffffff52;
+    }
+  }

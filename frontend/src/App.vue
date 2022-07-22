@@ -1,5 +1,8 @@
 <template>
-  <RouterView />
+  <section class="app">
+    <header>this is the header</header>
+    <RouterView />
+  </section>
 </template>
 
 <script>

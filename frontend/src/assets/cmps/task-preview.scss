@@ -1,0 +1,13 @@
+
+.task {
+    background: #fff;
+    border-radius: 3px;
+    margin-block-end: .5rem;
+      box-shadow: 0 1px 0 #c0c6d0;
+      cursor: pointer;
+  
+      &:hover{
+        background-color: rgb(250, 250, 250);
+      }
+  }
+  
