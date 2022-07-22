@@ -9,7 +9,7 @@
             :shouldAcceptDrop="(e, payload) => (e.groupName === 'col-items' && !payload.loading)"
             :get-child-payload="getCardPayload(group.id)" @drop="onCardDrop(group.id, $event)">
 
-            <task-preview @removeTask="removeTask" @click.native="goToEdit(task.id)" v-for="task in group.tasks"
+            <task-preview @removeTask="removeTask" @click.native="goToEdit(task, task.id)" v-for="task in group.tasks"
                 :boardId="board._id" :groupId="group.id" :task="task" :key="task.id" />
         </Container>
 
@@ -65,7 +65,7 @@ export default {
             //     taskId,
             //     groupd: this.group.id
             // });
-             await this.$store.dispatch({ type: "saveGroup", group: updatedGroup });
+            await this.$store.dispatch({ type: "saveGroup", group: updatedGroup });
         },
         async deleteGroup() {
             const id = this.group.id
@@ -87,7 +87,9 @@ export default {
             );
             this.isAddNewTask = false;
         },
-        goToEdit(taskId) {
+        goToEdit(task, taskId) {
+            task = JSON.parse(JSON.stringify(task));
+            this.$store.commit({ type: "setCurrTask", task });
             this.$router.push(`/board/${this.boardId}/${this.group.id}/${taskId}`)
         },
         getCardPayload(groupId) {

@@ -13,6 +13,7 @@ export const boardService = {
   getEmptyGroup,
   _makeId,
   saveTask,
+  getFilename,
 }
 
 function query() {
@@ -95,4 +96,14 @@ function getTask({ boardId, groupId, taskId }) {
       .groups.find((group) => groupId === group.id)
       .tasks.find((task) => task.id === taskId)
   })
+}
+
+function getFilename(url) {
+  const urlSplit = url.split('?');
+  if (urlSplit.length > 1) {
+      urlSplit.pop();
+      url = urlSplit[0];
+  } else url = urlSplit.pop();
+  const filename = url.split('/').pop();
+  return filename;
 }
