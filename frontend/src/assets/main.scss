@@ -2,22 +2,14 @@
 
 // BASICS
 @import 'basics/helpers';
-@import 'cmps/task-details';
 
 // CMPS
+@import 'cmps/task-details';
 @import 'cmps/app-header';
 @import 'cmps/task-screen';
 @import 'cmps/popup';
 @import 'cmps/group-preview';
+@import 'cmps/task-preview';
+@import 'views/board-view.scss'
 
-.app {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  // grid-template-rows: 2rem 11px 1fr;
-}
 
-.app header {
-  padding: 6px 4px;
-  height: 44px;
-}
