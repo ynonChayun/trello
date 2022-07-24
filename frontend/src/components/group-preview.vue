@@ -1,4 +1,27 @@
 <template>
+    <!-- <section class="group">
+        <div class="flex flex-center justify-between group-header">
+            <editableTitle @input="saveGroup" v-model="group.title" :title="group.title"></editableTitle>
+            <button @click="deleteGroup">Delete group</button>
+        </div>
+
+        <Container class="tasks-wrapper" orientation="vertical" group-name="col-items"
+            :shouldAcceptDrop="(e, payload) => (e.groupName === 'col-items' && !payload.loading)"
+            :get-child-payload="getCardPayload(group.id)" @drop="onCardDrop(group.id, $event)">
+
+            <task-preview @removeTask="removeTask" @click.native="goToEdit(task, task.id)" v-for="task in group.tasks"
+                :boardId="board._id" :groupId="group.id" :task="task" :key="task.id" />
+        </Container>
+
+        <div class="add-task">
+            <button v-if="!isAddNewTask" @click="isAddNewTask = true">
+                <span>+</span>
+                Add another card
+            </button>
+            <editable-text v-else v-model="newTask.title" :title="newTask.title" :type="'title'" :elementType="'task'"
+                :isEditFirst="true" @close-textarea="isAddNewTask = false" @addTask="addTask" />
+        </div>
+    </section> -->
     <section class="group-preview">
         <div class="group-content">
 
@@ -18,7 +41,7 @@
                 :shouldAcceptDrop="(e, payload) => (e.groupName === 'col-items' && !payload.loading)"
                 :get-child-payload="getCardPayload(group.id)" @drop="onCardDrop(group.id, $event)">
 
-                <task-preview class="task" @removeTask="removeTask" @click.native="goToEdit(task.id)"
+                <task-preview class="task" @removeTask="removeTask" @click.native="goToEdit(task, task.id)"
                     v-for="task in group.tasks" :boardId="board._id" :groupId="group.id" :task="task" :key="task.id" />
             </Container>
 
@@ -33,10 +56,14 @@
                     </button>
                 </div>
                 <form class="save-card " v-else>
-                    <textarea class ="task" type="text" v-model="newTask.title" @change="addTask" placeholder="Enter a title for this card" />
+                    <textarea class="task" type="text" v-model="newTask.title" @change="addTask"
+                        placeholder="Enter a title for this card" />
                     <div class="save-card-actions">
                         <button @click.prevent="addTask">Add card</button>
-                        <svg @click="undoAddTask" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="#000" stroke-width="2" d="M3,3 L21,21 M3,21 L21,3"></path></svg>
+                        <svg @click="undoAddTask" stroke="currentColor" fill="currentColor" stroke-width="0"
+                            viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="none" stroke="#000" stroke-width="2" d="M3,3 L21,21 M3,21 L21,3"></path>
+                        </svg>
                     </div>
                 </form>
             </footer>
@@ -73,10 +100,18 @@ export default {
     },
     methods: {
         async removeTask(taskId) {
+            // const board = JSON.parse(JSON.stringify(state.currBoard))
+            // const idx = board.groups.findIndex((group) => group.id === groupId)
+            // console.log('idx: ', idx)
+            // board.groups.splice(idx, 1)
             const updatedGroup = JSON.parse(JSON.stringify(this.group))
             const idx = updatedGroup.tasks.findIndex((task) => task.id === taskId)
             updatedGroup.tasks.splice(idx, 1)
-
+            // await this.$store.dispatch({
+            //     type: "removeTask",
+            //     taskId,
+            //     groupd: this.group.id
+            // });
             await this.$store.dispatch({ type: "saveGroup", group: updatedGroup });
         },
         async deleteGroup() {
@@ -86,8 +121,7 @@ export default {
                 groupId: id,
             });
         },
-        async addTask(val) {
-            this.newTask.title = val
+        async addTask() {
             if (!this.newTask.title) return;
             await this.$store.dispatch({
                 type: "saveTask",
@@ -97,8 +131,11 @@ export default {
             this.newTask = JSON.parse(
                 JSON.stringify(this.$store.getters.getEmptyTask)
             );
+            // this.isAddNewTask = false;
         },
-        goToEdit(taskId) {
+        goToEdit(task, taskId) {
+            task = JSON.parse(JSON.stringify(task));
+            this.$store.commit({ type: "setCurrTask", task });
             this.$router.push(`/board/${this.boardId}/${this.group.id}/${taskId}`)
         },
         getCardPayload(groupId) {
@@ -115,17 +152,23 @@ export default {
                 const newColumn = Object.assign({}, JSON.parse(JSON.stringify(group)))
 
                 newColumn.tasks = await applyDrag(newColumn.tasks, dropResult)
+                console.log('newColumn: ', newColumn)
+                console.log('itemIndex: ', itemIndex)
+                // debugger
+                // updatedBoard.groups.splice(itemIndex, 1, JSON.parse(JSON.stringify(newColumn)))
+                console.log('updatedBoard: ', updatedBoard)
 
+                // // TODO: EMIT TO PARENT - UPDATE BOARD
                 await this.$store.dispatch({ type: "saveGroup", group: newColumn });
-
+                // this.$emit('saveBoard', updatedBoard)
             }
         },
-        async saveGroup({ target: { value: title } }) {
+        async saveGroup(title) {
             const group = Object.assign({}, this.group)
             group.title = title
             await this.$store.dispatch({ type: "saveGroup", group });
         },
-        undoAddTask(){
+        undoAddTask() {
             this.isAddNewTask = false
         }
     }

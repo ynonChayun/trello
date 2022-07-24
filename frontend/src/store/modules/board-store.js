@@ -4,6 +4,7 @@ export const boardStore = {
   state: {
     boards: null,
     currBoard: null,
+    currTask: null,
   },
 
   getters: {
@@ -12,6 +13,9 @@ export const boardStore = {
     },
     currBoard({ currBoard }) {
       return currBoard
+    },
+    currTask(state) {
+      return state.currTask;
     },
     boardLabels({ currBoard }) {
       return currBoard.labels
@@ -46,6 +50,10 @@ export const boardStore = {
       state.boards.splice(idx, 1)
       // state.boards = state.boards.filter((board) => board._id !== boardId)
     },
+    setCurrTask(state, { task }) {
+      console.log('task: ' , task)
+      state.currTask = task;
+    },
   },
   actions: {
     async loadBoards({ commit }) {
@@ -58,6 +66,7 @@ export const boardStore = {
     },
     async saveBoard({ commit }, { board }) {
       try {
+        console.log('board new', board)
         const savedBoard = await boardService.save(board)
         console.log('savedBoard: ', savedBoard)
         commit({ type: 'saveBoard', savedBoard })
@@ -97,8 +106,9 @@ export const boardStore = {
     },
     async saveTask(
       { commit, state, dispatch },
-      { groupId, task, activityType }
+      { groupId, task }
     ) {
+      console.log('task: ' , task.id)
       const board = JSON.parse(JSON.stringify(state.currBoard))
       if (groupId) {
         var group = board.groups.find((savedGroup) => {
@@ -119,6 +129,7 @@ export const boardStore = {
       try {
         await dispatch('saveBoard', { board })
         commit({ type: 'setCurrBoard', board })
+        commit({ type: 'setCurrTask', task });
       } catch (err) {
         console.log('err:', err)
       }
