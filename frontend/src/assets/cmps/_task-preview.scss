@@ -8,6 +8,31 @@
   
       &:hover{
         background-color: rgb(250, 250, 250);
+
+        & .edit-task{
+          opacity: .7;
+        }
       }
   }
   
+  .edit-task{
+    display: flex;
+    align-items: center;
+   
+    border-radius: 3px;
+    height: 28px;
+    justify-content: center;
+    opacity: 0;
+    padding: 4px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 28px;
+    z-index: 15;
+
+    &:hover{
+      color: black;
+    background-color: #ebecf0;
+    }
+  }
+

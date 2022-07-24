@@ -2,12 +2,9 @@
   background-color: #026aa7;
   padding: 6px;
   display: flex;
+  width: 100vw;
   justify-content: space-between;
-  align-items: center;z
-  // position: absolute;
-  // left: 0;
-  // right: 0;
-  // z-index: 10;
+  align-items: center;
 
   button:hover,
   a:hover,
@@ -32,6 +29,7 @@
   button.create {
     margin-inline-start: 1em;
     background-color: rgba(0, 0, 0, 0.3);
+
     &:hover {
       background-color: rgba(255, 255, 255, 0.3);
     }
