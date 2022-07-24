@@ -91,6 +91,8 @@ export default {
             await this.$store.dispatch({ type: "saveTask", task });
         },
         saveDate(duedate) {
+            console.log('hiiiiiii')
+            console.log('duedate: ', duedate)
             this.task.duedate = duedate;
             const task = JSON.parse(JSON.stringify(this.task))
             this.togglePopup("Duedate");
@@ -99,6 +101,7 @@ export default {
         setTaskLabels({ labelIds }) {
             this.task.labelIds = labelIds;
             const task = JSON.parse(JSON.stringify(this.task))
+            console.log('task: ', task)
             this.saveTask(task);
         },
         saveAttachments(attachments) {
@@ -106,7 +109,8 @@ export default {
             // this.task.attachments = attachments;
             // const task = JSON.parse(JSON.stringify(this.task))
             // this.saveTask(task)
-        }
+        },
+
     }
 
 }

@@ -2,13 +2,13 @@
     z-index: 10;
     border-radius: 0.2em;
     width: 768px;
-    min-height: 860px;
+    // min-height: 600px;
     position: absolute;
-    top: 44px;
+    top: 0;
     left: 50%;
     transform: translate(-50%);
     background-color: #e8e9ea;
-    padding: 12px 16px 0 16px;
+    padding: 12px 16px 12px 16px;
 
 
     // SVGS
@@ -221,13 +221,19 @@
             }
         }
 
+        .checklist-header {
+            margin-bottom: 6px;
+
+        }
+
         .checklist-percentage {
             left: -40px;
             position: absolute;
         }
 
         .checklist-meter {
-            height: 1.5em
+            height: 1.5em;
+            margin-bottom: 6px;
         }
 
         .button {
@@ -363,7 +369,7 @@
     .task-description {
         width: 100%;
         padding-left: 44px;
-        margin-bottom: 24px;
+        margin-bottom: 10px;
 
         .description-textarea-edit {
             border: none;
@@ -426,7 +432,7 @@
 
         .description-header {
             padding: 8px 0;
-            margin-bottom: 4px ;
+            margin-bottom: 4px;
         }
 
         .desc-title {
@@ -627,6 +633,62 @@
                     background-color: #026aa7;
                     border: none;
                     box-shadow: none;
+                }
+
+            }
+        }
+    }
+
+    // LABELS PREVIEW
+    .task-labels-preview {
+        width: 100%;
+        padding-left: 44px;
+        margin-bottom: 10px;
+        .task-info-headline {
+            color: #5e6c84;
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 16px;
+            line-height: 20px;
+            margin: 0 8px 4px 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .task-label {
+            //margin-bottom: 30px;
+            margin: 0 8px 8px 0;
+
+            >*:not(:last-child) {
+                margin-inline-end: 6px;
+            }
+
+            .label-color {
+                font-size: 0.7em;
+                text-align: center;
+                border-radius: 3px;
+                white-space: nowrap;
+                color: #fff;
+                cursor: pointer;
+                box-sizing: border-box;
+                display: block;
+                float: left;
+                font-weight: 600;
+                height: 32px;
+                line-height: 32px;
+                margin: 0 4px 4px 0;
+                min-width: 40px;
+                padding: 0 12px;
+                width: auto;
+
+                &.is-selected::before {
+                    content: "✔";
+                }
+
+                &:hover {
+                    filter: brightness(110%)
                 }
 
             }

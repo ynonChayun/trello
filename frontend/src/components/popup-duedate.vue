@@ -7,8 +7,10 @@
             <button @click="togglePopup" class="btn close">X</button>
         </div>
         <div slot="main">
-            <datepicker :inline="true" :value="this.date" @selected="setDate">
-            </datepicker>
+            <!-- <datepicker :inline="true" :value="this.date" @selected="setDate">
+            </datepicker> -->
+            <el-date-picker v-model="value1" type="date" placeholder="Pick a date"
+                :default-value="new Date(2022, 9, 1)" />
             <!-- <div class="date-input-container">
                 <input class="date" type="checkbox" v-model="isDuedate" />
                 <input class="date" type="text" v-model="day" />
@@ -28,6 +30,7 @@
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import moment from "moment";
+import { ref } from 'vue'
 
 export default {
     props: {
@@ -35,6 +38,7 @@ export default {
     },
     data() {
         return {
+            value1: ref(''),
             date: null,
             duedate: { date: null, isComplete: false },
             isDuedate: false,
@@ -48,7 +52,7 @@ export default {
     },
     methods: {
         setDate(date) {
-            console.log('date: ' , date)
+            console.log('date: ', date)
             this.date = date
             this.duedate.date = moment(date).format('x');
             this.isDuedate = true;
@@ -57,9 +61,11 @@ export default {
             this.$emit("toggle-popup", "Duedate");
         },
         saveDate() {
-            // console.log('date:', this.duedate.date)
+            console.log('date:', this.value1)
+            // this.isDuedate.date = this.value1
+            // console.log('this.isDuedate: ' , this.isDuedate)
             if (this.isDuedate)
-                this.$emit("save-date", { date: this.duedate.date, isComplete: this.duedate.isComplete })
+                this.$emit("save-date", { date: this.value1, isComplete: false })
             else this.$emit("save-date", { date: '', isComplete: false });
         },
     },
