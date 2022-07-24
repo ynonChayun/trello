@@ -67,6 +67,15 @@ function _makeId(length = 5) {
   return text
 }
 
+// labels cls {
+// 1 - #f2d600 
+// 2 - #ff9f1a
+// 3 - #eb5a46
+// 4 - #e377e0
+// 5 - #0079bf
+// 6 - #51e898
+// }
+
 function _createBoards() {
   const boards = [
     {
@@ -84,12 +93,32 @@ function _createBoards() {
         {
           id: 'l101',
           title: 'Done',
-          color: '#61bd4f',
+          color: '#f2d600',
         },
         {
           id: 'l102',
+          title: '',
+          color: '#ff9f1a',
+        },
+        {
+          id: 'l103',
           title: 'Progress',
-          color: '#61bd33',
+          color: '#eb5a46',
+        },
+        {
+          id: 'l104',
+          title: '',
+          color: '#e377e0',
+        },
+        {
+          id: 'l105',
+          title: '',
+          color: '#0079bf',
+        },
+        {
+          id: 'l106',
+          title: '',
+          color: '#51e898',
         },
       ],
       members: [

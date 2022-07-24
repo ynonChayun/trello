@@ -6,19 +6,10 @@
 @import 'cmps/home-view';
 
 // CMPS
+@import 'cmps/task-details';
 @import 'cmps/app-header';
 @import 'cmps/task-screen';
 @import 'cmps/popup';
-
-// YUVAL SCSS
-.group {
-  background-color: #ebecf0;
-  border-radius: 3px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  max-height: 100%;
-  position: relative;
-  white-space: normal;
-  width: 100% !important;
-}
+@import 'cmps/group-preview';
+@import 'cmps/task-preview';
+@import 'views/board-view.scss';

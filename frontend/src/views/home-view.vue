@@ -1,17 +1,25 @@
 <template>
   <section class="home-view">
-    <div class="hero">
-      <div class="hero-sign-up">
-        <h1>Trello helps teams move work forward.</h1>
-        <p>
-          Collaborate, manage projects, and reach new productivity peaks. From
-          high rises to the home office, the way your team works is
-          unique—accomplish it all with Trello.
-        </p>
-        <button @click="this.$router.push('/board')">Get started</button>
-      </div>
-      <div class="hero-img">
+    <div class="home-layout">
+      <div class="hero">
+        <div class="hero-sign-up">
+          <h1>Trello helps teams move work forward.</h1>
+          <p>
+            Collaborate, manage projects, and reach new productivity peaks. From
+            high rises to the home office, the way your team works is
+            unique—accomplish it all with Trello.
+          </p>
+          <button @click="this.$router.push('/board')">Get started</button>
+        </div>
         <img src="../imgs/hero.webp" />
+      </div>
+      <div class="main-content">
+        <h2>It’s more than work. It’s a way of working together.</h2>
+        <p>
+          Start with a Trello board, lists, and cards. Customize and expand with
+          more features as your teamwork grows. Manage projects, organize tasks,
+          and build team spirit—all in one place.
+        </p>
       </div>
     </div>
   </section>
