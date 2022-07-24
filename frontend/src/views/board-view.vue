@@ -121,7 +121,7 @@ export default {
             await this.$store.dispatch({ type: "saveBoard", board })
         },
         async addGroup(val) {
-            this.newGroup.title = val
+            // this.newGroup.title = val
             if (!this.newGroup.title) return;
             // this.newGroup.board = { id: this.board._id };
             await this.$store.dispatch({ type: "saveGroup", group: this.newGroup });

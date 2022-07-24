@@ -1,19 +1,17 @@
 <template>
-    <!-- <pop-up> -->
-    <div class="popup">
+    <div class="popup popup-checklist">
         <div slot="header" class="task-popup-header">
             <h2>Add Checklist</h2>
-            <button @click="togglePopup" class="btn close icon x"></button>
+            <img class="close-svg"  @click="togglePopup" src="../../src/svgs/close_FILL0_wght400_GRAD0_opsz48.svg" alt="" />
         </div>
-        <div slot="main">
-            <h3>Title</h3>
-            <input type="text" name="title" class="checklist-title" v-model="checklist.title" />
-            <button @click="addChecklist" class="btn action narrow checklist-add">
+        <div slot="main " class="main-add-checklist">
+            <h3 class="add-checklist-title">Title</h3>
+            <input type="text" name="title" class="checklist-title-input" v-model="checklist.title" />
+            <button @click="addChecklist" class="add-checklist-btn">
                 Add
             </button>
         </div>
     </div>
-    <!-- </pop-up> -->
 </template>
 
 <script>
@@ -22,7 +20,7 @@ export default {
     data() {
         return {
             checklist: {
-                title: "",
+                title: "Checklist",
                 todos: [],
             },
         };

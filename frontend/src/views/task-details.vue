@@ -54,7 +54,7 @@
                         <img class="header-svg" src="../../src/svgs/screen.svg" alt="" />
                         <h1 class="task-title">{{ task.title }}</h1>
                     </div>
-                    <img class="close-svg" src="../../src/svgs/close_FILL0_wght400_GRAD0_opsz48.svg" alt="" />
+                    <img class="close-svg" @click="closeTask" src="../../src/svgs/close_FILL0_wght400_GRAD0_opsz48.svg" alt="" />
                 </div>
             </div>
 
@@ -64,7 +64,9 @@
                 </div>
 
                 <div class="task-main-content">
+                    <task-label v-if="task.labelIds && task.labelIds.length" :taskLabelIds="task.labelIds" />
                     <task-duedate v-if="task.duedate" :duedate="task.duedate" @set-completion="setCompletion" />
+                    <task-description :description="task.description" @save-desc="saveDescription" />
 
                     <task-checklist v-if="task.checklists" v-for="checklist in task.checklists" :key="checklist.id"
                         class="checklist-container" :checklist="checklist" @save-todo="saveTodo"
@@ -83,10 +85,13 @@ import filePicker from '../components/awsome-cmps/file-picker.vue'
 
 import { boardService } from '../service/board-service'
 
+// description
 // TRY SOMTHING NEW
 import taskControl from '../components/task-control.vue'
 import taskChecklist from '../components/task-checklist.vue'
 import taskDuedate from '../components/task-duedate.vue'
+import taskDescription from '../components/task-description.vue'
+import taskLabel from '../components/task-label.vue';
 
 export default {
 
@@ -113,6 +118,8 @@ export default {
         taskControl,
         taskChecklist,
         taskDuedate,
+        taskDescription,
+        taskLabel,
     },
     methods: {
         // deleteChecklist(clId) {
@@ -170,6 +177,15 @@ export default {
         setCompletion(isComplete) {
             this.task.duedate.isComplete = isComplete;
             this.saveTask(this.task);
+        },
+        saveDescription(description) {
+            console.log('description: ', description)
+            this.task.description = description
+            this.saveTask(this.task)
+        },
+        async closeTask() {
+            const board = await this.$store.getters.currBoard
+            this.$router.push(`/board/${board._id}`)
         }
 
     },
