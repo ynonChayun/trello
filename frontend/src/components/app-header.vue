@@ -1,7 +1,7 @@
 vue
 <template>
   <section class="app-header">
-    <div class="left-bar">
+    <nav class="left-nav">
       <a href="/">Trello</a>
       <button>
         Workspaces
@@ -20,8 +20,8 @@ vue
         <span class="material-icons"> keyboard_arrow_down </span>
       </button>
       <button class="create">Create</button>
-    </div>
-    <div class="right-bar">
+    </nav>
+    <nav class="right-nav">
       <input type="search" placeholder="Search" />
       <button>
         <i class="material-icons">info</i>
@@ -32,10 +32,23 @@ vue
       <div class="user-avatar">
         <img src="../imgs/amit-profile.jpg" />
       </div>
-    </div>
+    </nav>
+    <!-- <button @click="isMenuOpen = !isMenuOpen">{{ toggleMenu }}</button> -->
   </section>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      isMenuOpen: false,
+    }
+  },
+
+  computed: {
+    toggleMenu() {
+      return this.isMenuOpen ? 'X' : '☰'
+    },
+  },
+}
 </script>

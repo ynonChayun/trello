@@ -12,12 +12,6 @@
 @import 'cmps/popup';
 @import 'cmps/group-preview';
 @import 'cmps/group-actions-modal.scss';
-@import 'cmps/main-nav';
 @import 'cmps/task-preview';
 @import 'views/board-view.scss';
-
-.app-header-sections {
-    position: fixed;
-    z-index: 20;
-    width: 100w;
-}
+@import './cmps/board-header';

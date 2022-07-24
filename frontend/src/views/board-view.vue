@@ -1,5 +1,6 @@
 <template>
     <section class="board-view">
+        <board-header/>
         <router-view></router-view>
         <div v-if="board" class="board-canvas">
             <div class="board-fixed-container">
@@ -49,27 +50,6 @@
             </div>
         </div>
     </section>
-    <!-- <router-view></router-view> -->
-    <!-- <div v-if="board" class="board-canvas">
-        <div class="board-fixed-container">
-            <Container @drop="onColumnDrop($event)" group-name="cols" tag="div" orientation="horizontal">
-                <Draggable v-for="(group, idx) in board.groups" :key="group.id">
-                    <div>
-                        <group-preview @saveBoard="saveBoard" :key="group.id" :group="group" :boardId="board._id"
-                            :idx="idx" :board="board" />
-                    </div>
-                </Draggable>
-                <div class="add-new-group">
-                    <button v-if="!isAddNewGroup" @click="isAddNewGroup = true" class="group-addition">
-                        + Add another list
-                    </button>
-                    <editable-text v-else v-model="newGroup.title" :type="'title'" :isEditFirst="true"
-                        :elementType="'group'" @close-textarea="isAddNewGroup = false" @addTask="addGroup" />
-                </div>
-
-            </Container>
-        </div>
-    </div> -->
 </template>
 
 <script>
@@ -78,7 +58,7 @@ import { Container, Draggable } from 'vue3-smooth-dnd'
 import { applyDrag } from '../service/helpers.js'
 import groupPreview from '../components/group-preview.vue'
 import editableText from '../components/editable-text.vue'
-
+import boardHeader from '../components/board-header.vue'
 
 export default {
     name: 'board-view',
@@ -87,7 +67,7 @@ export default {
         Draggable,
         groupPreview,
         editableText,
-        
+        boardHeader
         
     },
     data() {
@@ -121,7 +101,7 @@ export default {
             await this.$store.dispatch({ type: "saveBoard", board })
         },
         async addGroup(val) {
-            // this.newGroup.title = val
+            this.newGroup.title = val
             if (!this.newGroup.title) return;
             // this.newGroup.board = { id: this.board._id };
             await this.$store.dispatch({ type: "saveGroup", group: this.newGroup });
