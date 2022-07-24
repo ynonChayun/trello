@@ -17,9 +17,9 @@
     "vue-smooth-dnd": "^0.8.1",
     "vue3-smooth-dnd": "^0.0.2",
     "vuedraggable": "^2.24.3",
+    "vuejs3-datepicker": "^1.0.7",
     "vuex": "^4.0.2"
   },
-
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.1",
     "vite": "^3.0.1"

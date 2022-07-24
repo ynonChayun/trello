@@ -4,8 +4,9 @@
     <div class="duedate-date flex items-center gap-1">
       <input class="task-checkbox" type="checkbox" v-model="isComplete" @change="toggleComplete" />
       <div class="flex date">
-        <p v-if="date" class="task-text-details">{{ date.day }} at {{ date.hour }} <span
-            v-if="this.duedate.isComplete">&nbsp - {{ status }}</span> </p>
+        <p v-if="date" class="task-text-details">{{ dueDateFixed }} <span v-if="this.duedate.isComplete">&nbsp - {{
+            status
+        }}</span> </p>
         <!-- <p v-if="status" class="status" :class="status"> {{status}}</p> -->
       </div>
     </div>
@@ -47,7 +48,14 @@ export default {
       if (this.duedate.isComplete) return 'complete';
       if (parseInt(this.duedate.date) - Date.now() < 0) return 'overdue';
       return null;
-    }
+    },
+    dueDateFixed() {
+      if (this.duedate) {
+        var fixedDate = (new Date(this.duedate.date) + '').slice(4, 10)
+        fixedDate += ' at 12:00 AM'
+        return fixedDate
+      }
+    },
   },
 };
 </script>

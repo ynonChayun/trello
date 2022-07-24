@@ -1,6 +1,6 @@
 <template>
     <li class="clean-list task-checklist">
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center checklist-header">
             <div class="flex align-center items-center">
                 <img class="check-svg" src="../../src/svgs/check.svg" alt="" />
                 <input class="input-checklist-title" @change="editTitle" v-model="checklist.title" />
