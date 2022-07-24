@@ -3,14 +3,8 @@
         <div class="flex justify-between items-center">
             <div class="flex align-center items-center">
                 <img class="check-svg" src="../../src/svgs/check.svg" alt="" />
-                <h4 v-if="!isEditTitleOpen" @click="openEditTitle" class="task-info-headline">
-                    {{ checklist.title }}
-                </h4>
-                <editable-text v-else v-model="checklist.title" :value="'todo-title'" :type="'title'"
-                    :elementType="'checklist'" :isEditFirst="true" @close-textarea="isEditTitleOpen = false"
-                    @input="editTitle" class="editable-todo-title" />
+                <input class="input-checklist-title" @change="editTitle" v-model="checklist.title" />
             </div>
-
             <button @click="deleteChecklist" v-if="!isEditTitleOpen" class="button">
                 Delete
             </button>
@@ -28,28 +22,34 @@
 
         <form>
 
-    <li v-for="todo in checklist.todos" :key="todo.id" class="clean-list flex  align-center items-center"
+    <li v-for="todo in checklist.todos" :key="todo.id" class="items-list clean-list flex  align-center items-center"
         :style="[todo.isDone ? { 'text-decoration': 'line-through' } : '']">
         <input class="checklist-checkbox" type="checkbox" :ref="todo.id" :id="todo.id" :name="todo.id"
             @click="toggleChecked(todo)" :checked="todo.isDone" />
-        <div>
-            <label :for="todo.id" v-if="todo.id !== currTodoId" @click="setCurrTodo(todo.id)">
-                {{ todo.txt }}
-            </label>
-
-            <editable-text v-else v-model="todo.txt" :type="todo.id" :value="todo.id"
-                :isEditFirst="todo.id === currTodoId" @close-textarea="isEditTodoOpen = false" @input="editTodo(todo)"
-                class="editable-todo">
-            </editable-text>
-            <button @click.prevent="deleteTodo(todo)" class="btn close icon x delete-todo" />
+        <div class="flex justify-between items-center item">
+            <input class="input-checklist-txt" :for="todo.id" @change="editTodo(todo)" v-model="todo.txt" />
+            <span @click.prevent="deleteTodo(todo)" class="">x </span>
         </div>
     </li>
 
-    <button v-if="!isAddTodoOpen" @click="openAddTodo" class="button">
-        Add an item
-    </button>
-    <editable-text v-else v-model="todo.txt" :value="'todo'" :type="'todo'" :isEditFirst="true"
-        @close-textarea="isAddTodoOpen = false" @addTask="addTodo" class="editable-todo-add" />
+    <footer class="add-item-footer">
+        <div v-if="!isAddTodoOpen" class="add-card">
+            <button @click="isAddTodoOpen = true" class="button">
+                Add an item
+            </button>
+        </div>
+        <form class="save-item" v-else>
+            <textarea class="task" type="text" v-model="todo.txt" @change="addTodo"
+                placeholder="Enter a title for this item" />
+            <div class="save-item-actions">
+                <button @click.prevent="addTodo" class="button">Add item</button>
+                <svg @click="isAddTodoOpen = false" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
+                    height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="none" stroke="#000" stroke-width="2" d="M3,3 L21,21 M3,21 L21,3"></path>
+                </svg>
+            </div>
+        </form>
+    </footer>
     </form>
     </li>
 </template>
@@ -97,13 +97,15 @@ export default {
             this.isEditTitleOpen = true;
         },
         editTitle() {
-            this.checklist.title = this.checklistTitle;
+            // this.checklist.title = this.checklistTitle;
             this.saveChecklist();
         },
-        addTodo(val) {
-            this.todo.txt = val
+        addTodo() {
+            console.log(this.todo.txt)
+            // this.todo.txt = val
             if (!this.todo.txt) return
             if (!this.checklist.todos) this.checklist.todos = [];
+            console.log(':hhhhhhhh ')
             this.todo.id = boardService._makeId();
             this.checklist.todos.push({ ...this.todo });
             this.saveChecklist();

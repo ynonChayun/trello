@@ -154,18 +154,13 @@ export default {
                 newColumn.tasks = await applyDrag(newColumn.tasks, dropResult)
                 console.log('newColumn: ', newColumn)
                 console.log('itemIndex: ', itemIndex)
-                // debugger
-                // updatedBoard.groups.splice(itemIndex, 1, JSON.parse(JSON.stringify(newColumn)))
                 console.log('updatedBoard: ', updatedBoard)
 
-                // // TODO: EMIT TO PARENT - UPDATE BOARD
                 await this.$store.dispatch({ type: "saveGroup", group: newColumn });
-                // this.$emit('saveBoard', updatedBoard)
             }
         },
-        async saveGroup(title) {
+        async saveGroup() {
             const group = Object.assign({}, this.group)
-            group.title = title
             await this.$store.dispatch({ type: "saveGroup", group });
         },
         undoAddTask() {

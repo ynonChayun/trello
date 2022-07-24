@@ -64,6 +64,7 @@
                 </div>
 
                 <div class="task-main-content">
+                    <task-description :description="task.description" @save-desc="saveDescription" />
                     <task-duedate v-if="task.duedate" :duedate="task.duedate" @set-completion="setCompletion" />
 
                     <task-checklist v-if="task.checklists" v-for="checklist in task.checklists" :key="checklist.id"
@@ -83,10 +84,12 @@ import filePicker from '../components/awsome-cmps/file-picker.vue'
 
 import { boardService } from '../service/board-service'
 
+// description
 // TRY SOMTHING NEW
 import taskControl from '../components/task-control.vue'
 import taskChecklist from '../components/task-checklist.vue'
 import taskDuedate from '../components/task-duedate.vue'
+import taskDescription from '../components/task-description.vue'
 
 export default {
 
@@ -113,6 +116,7 @@ export default {
         taskControl,
         taskChecklist,
         taskDuedate,
+        taskDescription,
     },
     methods: {
         // deleteChecklist(clId) {
@@ -170,6 +174,11 @@ export default {
         setCompletion(isComplete) {
             this.task.duedate.isComplete = isComplete;
             this.saveTask(this.task);
+        },
+        saveDescription(description) {
+            console.log('description: ', description)
+            this.task.description = description
+            this.saveTask(this.task)
         }
 
     },

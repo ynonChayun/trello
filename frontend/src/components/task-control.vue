@@ -73,6 +73,7 @@ export default {
     },
     methods: {
         togglePopup(str) {
+            console.log('hi')
             var dataStr = `is${str}Open`;
             this[dataStr] = !this[dataStr];
         },
