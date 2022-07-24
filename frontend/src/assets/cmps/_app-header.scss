@@ -6,6 +6,9 @@
   justify-content: space-between;
   align-items: center;
 
+    position: fixed;
+    z-index: 20;
+
   button {
     display: flex;
     align-items: center;
