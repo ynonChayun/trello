@@ -22,13 +22,16 @@
                 :isEditFirst="true" @close-textarea="isAddNewTask = false" @addTask="addTask" />
         </div>
     </section> -->
+      
+
     <section class="group-preview">
+        <group-actions-modal @close-group-actions="this.closeGroupActions" v-if="isGroupActionsShow" />
         <div class="group-content">
 
             <header class="flex flex-center group-header">
                 <input class="input-title" @change="saveGroup" v-model="group.title" />
                 <div class="more-options">
-                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1rem"
+                    <svg @click="isGroupActionsShow = true" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1rem"
                         width="1rem" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="256" cy="256" r="48"></circle>
                         <circle cx="416" cy="256" r="48"></circle>
@@ -55,16 +58,18 @@
                         Add another card
                     </button>
                 </div>
-                <form class="save-card " v-else>
+                <form class="save-card" v-else>
                     <textarea class="task" type="text" v-model="newTask.title" @change="addTask"
                         placeholder="Enter a title for this card" />
-                    <div class="save-card-actions">
+
+                    <div class="save-element-section">
                         <button @click.prevent="addTask">Add card</button>
                         <svg @click="undoAddTask" stroke="currentColor" fill="currentColor" stroke-width="0"
                             viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                             <path fill="none" stroke="#000" stroke-width="2" d="M3,3 L21,21 M3,21 L21,3"></path>
                         </svg>
                     </div>
+                    
                 </form>
             </footer>
         </div>
@@ -77,7 +82,7 @@ import { applyDrag } from '../service/helpers.js'
 import taskPreview from '../components/task-preview.vue'
 import editableTitle from '../components/editable-title.vue'
 import editableText from "../components/editable-text.vue";
-
+import groupActionsModal from '../components/group-actions-modal.vue'
 
 export default {
     props: {
@@ -90,28 +95,24 @@ export default {
         Container,
         taskPreview,
         editableTitle,
-        editableText
+        editableText,
+        groupActionsModal,
     },
     data() {
         return {
+             isGroupActionsShow : false,
             newTask: JSON.parse(JSON.stringify(this.$store.getters.getEmptyTask)),
             isAddNewTask: false,
         }
     },
     methods: {
+        closeGroupActions(){
+            this.isGroupActionsShow = false
+        },
         async removeTask(taskId) {
-            // const board = JSON.parse(JSON.stringify(state.currBoard))
-            // const idx = board.groups.findIndex((group) => group.id === groupId)
-            // console.log('idx: ', idx)
-            // board.groups.splice(idx, 1)
             const updatedGroup = JSON.parse(JSON.stringify(this.group))
             const idx = updatedGroup.tasks.findIndex((task) => task.id === taskId)
             updatedGroup.tasks.splice(idx, 1)
-            // await this.$store.dispatch({
-            //     type: "removeTask",
-            //     taskId,
-            //     groupd: this.group.id
-            // });
             await this.$store.dispatch({ type: "saveGroup", group: updatedGroup });
         },
         async deleteGroup() {

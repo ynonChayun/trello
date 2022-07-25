@@ -1,17 +1,25 @@
 <template>
     <section class="board-view">
+        <board-header/>
         <router-view></router-view>
         <div v-if="board" class="board-canvas">
             <div class="board-fixed-container">
                 <Container @drop="onColumnDrop($event)" group-name="cols" tag="div" orientation="horizontal">
-                    <Draggable v-for="(group, idx) in board.groups" :key="group.id">
+                   
+                   
+                   <Draggable v-for="(group, idx) in board.groups" :key="group.id">
+                          
                         <div>
                             <group-preview class="group-container" @saveBoard="saveBoard" :key="group.id" :group="group"
                                 :boardId="board._id" :idx="idx" :board="board" />
                         </div>
+
                     </Draggable>
+
+                   
+
                     <div class="add-new-group">
-                        <button v-if="!isAddNewGroup" @click="isAddNewGroup = true" class="group-addition">
+                        <button class="btn-add-group" v-if="!isAddNewGroup" @click="isAddNewGroup = true">
 
                             <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
                                 class="icon" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -22,17 +30,19 @@
                             Add another list
 
                         </button>
+
                         <form v-else class="group-preview">
                             <input class="input-title" v-model="newGroup.title" type="text" @change="addGroup"
                                 placeholder="Enter list title" />
 
-                            <div class="save-list-actions">
-                                <button class="save-button" @click.prevent="addGroup">Add list</button>
+                            <div class="save-element-section">
+                                <button @click.prevent="addGroup">Add list</button>
                                 <svg @click="undoAddList" stroke="currentColor" fill="currentColor" stroke-width="0"
                                     viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                                     <path fill="none" stroke="#000" stroke-width="2" d="M3,3 L21,21 M3,21 L21,3"></path>
                                 </svg>
                             </div>
+
                         </form>
                     </div>
 
@@ -40,27 +50,6 @@
             </div>
         </div>
     </section>
-    <!-- <router-view></router-view> -->
-    <!-- <div v-if="board" class="board-canvas">
-        <div class="board-fixed-container">
-            <Container @drop="onColumnDrop($event)" group-name="cols" tag="div" orientation="horizontal">
-                <Draggable v-for="(group, idx) in board.groups" :key="group.id">
-                    <div>
-                        <group-preview @saveBoard="saveBoard" :key="group.id" :group="group" :boardId="board._id"
-                            :idx="idx" :board="board" />
-                    </div>
-                </Draggable>
-                <div class="add-new-group">
-                    <button v-if="!isAddNewGroup" @click="isAddNewGroup = true" class="group-addition">
-                        + Add another list
-                    </button>
-                    <editable-text v-else v-model="newGroup.title" :type="'title'" :isEditFirst="true"
-                        :elementType="'group'" @close-textarea="isAddNewGroup = false" @addTask="addGroup" />
-                </div>
-
-            </Container>
-        </div>
-    </div> -->
 </template>
 
 <script>
@@ -69,6 +58,7 @@ import { Container, Draggable } from 'vue3-smooth-dnd'
 import { applyDrag } from '../service/helpers.js'
 import groupPreview from '../components/group-preview.vue'
 import editableText from '../components/editable-text.vue'
+import boardHeader from '../components/board-header.vue'
 
 export default {
     name: 'board-view',
@@ -77,10 +67,13 @@ export default {
         Draggable,
         groupPreview,
         editableText,
+        boardHeader
+        
     },
     data() {
         return {
             // currBoard: null,
+           
             isAddNewGroup: false,
             newGroup: JSON.parse(JSON.stringify(this.$store.getters.getEmptyGroup)),
         }
@@ -108,7 +101,7 @@ export default {
             await this.$store.dispatch({ type: "saveBoard", board })
         },
         async addGroup(val) {
-            // this.newGroup.title = val
+            this.newGroup.title = val
             if (!this.newGroup.title) return;
             // this.newGroup.board = { id: this.board._id };
             await this.$store.dispatch({ type: "saveGroup", group: this.newGroup });

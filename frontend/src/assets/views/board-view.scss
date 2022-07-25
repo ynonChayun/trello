@@ -1,15 +1,16 @@
 
 .board-view {
     background-color: lightblue;
-    flex-grow: 1;
-    margin: .5rem 0 .5rem 1rem;
+    width: 100%;
+    height: 98vh;
+    padding-top:45px;
+    overflow-x: scroll;
   }
-  
   
   .add-new-group {
     height: fit-content;
-  
-    & button {
+
+    & .btn-add-group {
       height: 42px;
       padding: 11px 8px;
       background-color: #ffffff3d;
@@ -28,5 +29,9 @@
   
     &:hover {
       background-color: #ffffff52;
+    }
+
+    & form{
+      padding-inline-start: .25rem;
     }
   }

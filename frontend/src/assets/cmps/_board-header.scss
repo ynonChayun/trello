@@ -1,0 +1,36 @@
+.board-header {
+  background-color: transparent;
+  color: white;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    background-color: #ffffff3d;
+    color: white;
+    height: 2rem;
+    border: none;
+    border-radius: 0.185em;
+  }
+
+  .left-nav {
+    display: flex;
+
+    .board-header-members {
+      display: flex;
+      .avatar {
+        > * {
+          height: 2rem;
+          width: 2rem;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  .right-nav {
+    display: flex;
+    gap: 0.3em;
+  }
+}
