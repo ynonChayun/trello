@@ -1,38 +1,27 @@
 <template>
   <section class="board-list">
     <h1>hi from boards page</h1>
-    <form @submit.prevent="saveBoard">
-      <input type="text" v-model="newBoard.title" placeholder="Board title" />
-      <button>Create</button>
-    </form>
     <div class="boards-container">
-      <router-link
-        v-for="board in boards"
-        :to="`/board/${board._id}`"
-        :board="board"
-        :key="board._id"
-        class="board-preview"
-        >{{ board.title }}
-        <button @click.stop="deleteBoard(board._id)">X</button>
-      </router-link>
+      <board-preview v-for="board in boards" :board="board" :key="board._id" />
+      <div class="create-board">Create new board</div>
+      <popup-create @createdBoard="saveBoard" />
     </div>
   </section>
 </template>
 
 <script>
+import boardPreview from '../components/board-preview.vue'
+import popupCreate from '../components/popup-create.vue'
 export default {
   data() {
     return {
-      newBoard: {
-        title: null,
-      },
+      isCreate: false,
     }
   },
 
   methods: {
-    saveBoard() {
-     let board = JSON.parse(JSON.stringify(this.newBoard))
-      this.$store.dispatch({ type: 'saveBoard', board })
+    saveBoard(newBoard) {
+      this.$store.dispatch({ type: 'saveBoard', newBoard })
     },
     deleteBoard(boardId) {
       this.$store.dispatch({ type: 'deleteBoard', boardId })
@@ -44,28 +33,10 @@ export default {
       return this.$store.getters.boards
     },
   },
+
+  components: {
+    boardPreview,
+    popupCreate,
+  },
 }
 </script>
-
-<style>
-.board-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.boards-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2em;
-}
-
-.board-preview {
-  color: white;
-  font-weight: bold;
-  background-color: darkcyan;
-  border-radius: 0.1875em;
-  padding: 0.5em;
-  text-decoration: none;
-}
-</style>

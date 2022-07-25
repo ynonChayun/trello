@@ -5,6 +5,7 @@
       <button class="star">
         <span class="material-icons"> grade </span>
       </button>
+      <span class="divider"></span>
       <div class="board-header-members">
         <div class="avatar">
           <img src="../imgs/amit-profile.jpg" />

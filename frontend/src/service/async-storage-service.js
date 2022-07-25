@@ -68,7 +68,7 @@ function _makeId(length = 5) {
 }
 
 // labels cls {
-// 1 - #f2d600 
+// 1 - #f2d600
 // 2 - #ff9f1a
 // 3 - #eb5a46
 // 4 - #e377e0
@@ -80,7 +80,8 @@ function _createBoards() {
   const boards = [
     {
       _id: 'b101',
-      title: 'Robot dev proj',
+      title: 'sprint 4',
+      imgUrl: '../imgs/2.jpg',
       archivedAt: 1589983468418,
       createdAt: 1589983468418,
       createdBy: {
@@ -431,6 +432,31 @@ function _createBoards() {
     //         },
     //       ],
     //     },
+    {
+      _id: 'b101',
+      title: 'sprint 4',
+      imgUrl: '../imgs/1.jpg',
+    },
+    {
+      _id: 'b101',
+      title: 'sprint 4',
+      imgUrl: '../imgs/2.jpg',
+    },
+    {
+      _id: 'b101',
+      title: 'sprint 4',
+      imgUrl: '../imgs/3.jpg',
+    },
+    {
+      _id: 'b101',
+      title: 'sprint 4',
+      imgUrl: '../imgs/4.jpg',
+    },
+    {
+      _id: 'b101',
+      title: 'sprint 4',
+      imgUrl: '../imgs/4.jpg',
+    },
   ]
 
   localStorage.setItem('boardDB', JSON.stringify(boards))
