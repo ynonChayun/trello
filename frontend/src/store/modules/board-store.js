@@ -51,7 +51,6 @@ export const boardStore = {
       // state.boards = state.boards.filter((board) => board._id !== boardId)
     },
     setCurrTask(state, { task }) {
-      console.log('task: ' , task)
       state.currTask = task;
     },
   },
@@ -66,9 +65,7 @@ export const boardStore = {
     },
     async saveBoard({ commit }, { board }) {
       try {
-        console.log('board new', board)
         const savedBoard = await boardService.save(board)
-        console.log('savedBoard: ', savedBoard)
         commit({ type: 'saveBoard', savedBoard })
         commit({ type: 'setCurrBoard', board: savedBoard })
       } catch (err) {
@@ -108,7 +105,6 @@ export const boardStore = {
       { commit, state, dispatch },
       { groupId, task }
     ) {
-      console.log('task: ' , task.id)
       const board = JSON.parse(JSON.stringify(state.currBoard))
       if (groupId) {
         var group = board.groups.find((savedGroup) => {
@@ -143,6 +139,19 @@ export const boardStore = {
         commit({ type: 'setCurrBoard', board })
       } catch (err) {
         console.log('err:', err)
+      }
+    },
+    async saveBoardLabels({ state, commit, dispatch }, { labels }) {
+      const board = JSON.parse(JSON.stringify(state.currBoard));
+
+      board.labels = labels;
+      console.log('labels: ' , labels)
+
+      try {
+        await dispatch('saveBoard', { board });
+        commit({ type: 'setCurrBoard', board });
+      } catch (err) {
+        console.log('err:', err);
       }
     },
   },

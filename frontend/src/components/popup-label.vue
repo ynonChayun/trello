@@ -9,14 +9,14 @@
       <input type="search" v-model="searchStr" placeholder="Search labels..." class="search-label" />
       <ul v-if="boardLabels" class="clean-list label-list ">
 
-        <li v-for="label in boardLabels" :key="label.id" class="flex justify-between label items-center gap-1" >
+        <li v-for="label in boardLabels" :key="label.id" class="flex justify-between label items-center gap-1">
           <span @click="toggleSelectLabel(label.id)" :class="{ 'label-in-use': isUsed(label.id) }" :style="{
-          backgroundColor: label.color}" class="label-title">
+            backgroundColor: label.color
+          }" class="label-title">
             {{ label.title }}
-            <span v-if="isUsed(label.id)" class="icon v"></span>
+            <span v-if="isUsed(label.id)" class="icon v">V</span>
           </span>
           <img class="edit-svg" @click="openLabelEdit($event, 'Change', label)" src="../svgs/edit.svg" alt="">
-          <!-- <span @click="openLabelEdit($event, 'Change', label)" class="">EDIT</span> -->
         </li>
 
       </ul>
@@ -26,20 +26,13 @@
       </span>
     </div>
   </div>
-  <!-- <popup-label-edit
-    v-else
-    :action="action"
-    :label="selectedLabel"
-    :leftPos="leftPos"
-    :topPos="topPos"
-    @save-label="saveLabel"
-    @closeLabelEdit="closeLabelEdit"
-    @remove-board-label="removeBoardLabel"
-  /> -->
+  <popup-label-edit v-else :action="action" :label="selectedLabel" @save-label="saveLabel"
+    @closeLabelEdit="closeLabelEdit" @remove-board-label="removeBoardLabel" />
 </template>
 
 <script>
-// import popupLabelEdit from "@/cmps/task/popup/popup-label-edit.vue";
+import { boardService } from "../service/board-service";
+import popupLabelEdit from "./popup-label-edit.vue";
 export default {
   props: {
     task: Object,
@@ -81,13 +74,15 @@ export default {
       this.$emit("toggle-popup", "Label");
     },
     async saveLabel(label) {
-      if (this.selectedLabel) {
-        const { color, title } = label;
-        this.selectedLabel.color = color;
-        this.selectedLabel.title = title;
+      if (!label.id) {
+        label.id = boardService._makeId()
+        this.boardLabels.push(label)
       } else {
-        this.boardLabels.push(label);
+        const idx = this.boardLabels.findIndex((currLabel) => currLabel.id === label.id)
+        this.boardLabels.splice(idx, 1, label)
+
       }
+
       await this.$store.dispatch({
         type: "saveBoardLabels",
         labels: this.boardLabels,
@@ -121,8 +116,7 @@ export default {
     },
   },
   components: {
-    // popUp,
-    // popupLabelEdit,
+    popupLabelEdit,
   },
 };
 </script>

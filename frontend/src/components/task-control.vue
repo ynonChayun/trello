@@ -1,5 +1,5 @@
 <template>
-    <section class="flex flex-col">
+    <section class="flex flex-col task-control">
 
         <div class="flex justify-between items-center">
             <h3 class="suggested-settings">Suggested</h3>
@@ -20,30 +20,40 @@
             <span class="action-span">Members</span>
         </div>
 
-        <div class="action-btn" @click="togglePopup('Checklist')">
-            <img class="close-svg" src="../../src/svgs/check.svg" alt="" />
-            <span class="action-span">Checklist</span>
+        <div class="action-btn">
+            <img @click="togglePopup('Checklist')" class="close-svg" src="../../src/svgs/check.svg" alt="" />
+            <span @click="togglePopup('Checklist')" class="action-span">Checklist</span>
+            <popup-checklist v-if="isChecklistOpen" @add-checklist="setChecklist" @toggle-popup="toggleCheklist" />
         </div>
-        <popup-checklist v-if="isChecklistOpen" @add-checklist="setChecklist" @toggle-popup="toggleCheklist" />
 
         <div class="action-btn">
-            <img class="close-svg" src="../../src/svgs/date.svg" alt="">
+            <img class="close-svg" @click="togglePopup('Duedate')" src="../../src/svgs/date.svg" alt="">
             <span class="action-span" @click="togglePopup('Duedate')">Dates</span>
+            <popup-duedate v-if="isDuedateOpen" @toggle-popup="togglePopup" @save-date="saveDate"
+                :taskDuedate="task.duedate" ref="Duedate" />
         </div>
-        <popup-duedate v-if="isDuedateOpen" @toggle-popup="togglePopup" @save-date="saveDate"
-            :taskDuedate="task.duedate" ref="Duedate" />
 
         <div class="action-btn">
-            <img class="close-svg" src="../../src/svgs/label.svg" alt="">
+            <img class="close-svg" @click="togglePopup('Label', $event)" src="../../src/svgs/label.svg" alt="">
             <span class="action-span" @click="togglePopup('Label', $event)">Labels</span>
+            <popup-label v-if="isLabelOpen" @set-task-labels="setTaskLabels" @toggle-popup="togglePopup" tabindex="0"
+                ref="Label" :task="task">
+            </popup-label>
         </div>
-        <popup-label v-if="isLabelOpen" @set-task-labels="setTaskLabels" @toggle-popup="togglePopup" tabindex="0"
-            ref="Label" :task="task">
-        </popup-label>
 
-        <!-- <span @click="togglePopup('Attachment')">Attachement</span>
-        <popup-attachment v-if="isAttachmentOpen" @save-attachments="saveAttachments" @toggle-popup="togglePopup"
-            :attachments="task.attachments" ref="Attachment" /> -->
+        <div class="action-btn">
+            <img class="close-svg" @click="togglePopup('Attachment')" src="../../src/svgs/attachment.svg" alt="">
+            <span class="action-span" @click="togglePopup('Attachment')">Attachement</span>
+            <popup-attachment v-if="isAttachmentOpen" @attachFile="saveAttachments" @toggle-popup="togglePopup"
+                :attachments="task.attachments" ref="Attachment"></popup-attachment>
+        </div>
+
+        <div class="action-btn">
+            <img class="close-svg" @click="togglePopup('Cover')" src="../../src/svgs/screen.svg" alt="">
+            <span class="action-span" @click="togglePopup('Cover')">Cover</span>
+            <popup-cover v-if="isCoverOpen" :task="task" @setCoverColor="saveTask" @setCoverImg="saveTask"  @toggle-popup="togglePopup" @removeCover="saveTask"/>
+        </div>
+
     </section>
 </template>
 
@@ -52,7 +62,10 @@ import { boardService } from '../service/board-service';
 import popupChecklist from './popup-cheklist.vue'
 import popupDuedate from './popup-duedate.vue'
 import popupLabel from './popup-label.vue'
-// import popupAttachment from './popup-attachment.vue'
+import popupAttachment from './popup-attachment.vue';
+import popupCover from './popup-cover.vue';
+
+
 export default {
     props: {
         task: Object,
@@ -60,8 +73,9 @@ export default {
     components: {
         popupChecklist,
         popupDuedate,
-        popupLabel
-        // popupAttachment,
+        popupLabel,
+        popupAttachment,
+        popupCover
     },
     data() {
         return {
@@ -69,6 +83,9 @@ export default {
             isDuedateOpen: false,
             isLabelOpen: false,
             isAttachmentOpen: false,
+            isCoverOpen: false,
+
+
         }
     },
     methods: {
@@ -104,13 +121,13 @@ export default {
             console.log('task: ', task)
             this.saveTask(task);
         },
-        saveAttachments(attachments) {
-            console.log('attachments: ', attachments)
-            // this.task.attachments = attachments;
-            // const task = JSON.parse(JSON.stringify(this.task))
-            // this.saveTask(task)
+        saveAttachments(file) {
+            if (!this.task.attachments) this.task.attachments = []
+            this.task.attachments.push(file)
+            console.log(this.task.attachments)
+            const task = JSON.parse(JSON.stringify(this.task))
+            this.saveTask(task)
         },
-
     }
 
 }

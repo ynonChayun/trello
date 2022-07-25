@@ -1,93 +1,80 @@
 <template>
-    <div class="popup-attachment">
+    <div class="popup attachment-popup">
         <div slot="header" class="task-popup-header">
-            <h2>Attach from...</h2>
-            <button @click="togglePopup" class="btn close icon x"></button>
+            <h2>Add attachment</h2>
+            <button @click="togglePopup" class="btn close">X</button>
         </div>
+
         <div slot="main">
-            <button class="btn file-upload">
-                Computer
-                <input class="file-upload-input" @change="onUploadImg" type="file" />
-            </button>
-            <form @submit.prevent="saveAttachment">
-                <h3>Attach a link</h3>
-                <input type="text" v-model="url" @change="toggleAddName" placeholder="Paste any link here..."
-                    class="url-input" />
-                <div v-if="url">
-                    <h3>Link name (optional)</h3>
-                    <input type="text" v-model="newAttachment.title" class="url-name-input" />
+            <ul>
+                <div class="computer">
+                    <li class="cmp">Computer</li>
+                    <input @change="addFile" type="file">
                 </div>
-                <button class="btn neutral narrow attachment-add">Attach</button>
+            </ul>
+
+            <form @submit.prevent="readLink" class="link-box">
+                <span class="link">Attach a link</span>
+                <input v-model="url" type="url">
+                <button>Attach</button>
             </form>
+
+
         </div>
+
     </div>
 </template>
-
-<script>
-import { boardService } from "../service/board-service";
-
+ <script>
 export default {
-    props: {
-        attachments: Array,
+    name: 'ProjectApp',
+    emits: ['attachFile'],
+
+    components: {
     },
     data() {
         return {
-            isLoading: false,
-
             url: null,
-            newAttachment: {
-                id: null,
-                title: "",
-                url: null,
-                createdAt: null,
-            },
+            file: {}
         };
     },
+    created() {
+
+    },
     methods: {
-        async onUploadImg(ev) {
-            try {
-                this.isLoading = true;
-                const file = ev.target.files[0];
-                const res = await boardService.uploadImg(file);
-                this.isLoading = false;
-                this.saveAttachment(res);
-            } catch (err) {
-                console.log("Couldn't load image");
-            } finally {
-                this.$emit("not-drag-over");
+        addFile(ev) {
+            var file = ev.target.files[0]
+            var fReader = new FileReader()
+            fReader.readAsDataURL(file)
+            fReader.onloadend = (event) => {
+                this._makeFileObj(event.target.result)
             }
         },
-        saveAttachment(res) {
-            if (!this.url) return;
-            this.setAttachmentDetails(res);
-            const attachmentsToEdit = [...this.attachments];
-            attachmentsToEdit.push(this.newAttachment);
-            this.$emit("save-attachments", attachmentsToEdit);
+        _makeFileObj(url) {
+            this.file = { id: this._makeId(), title: 'new file', url }
+            this.$emit('attachFile', this.file)
         },
-        setAttachmentDetails(res) {
-            this.newAttachment.id = boardService._makeId();
-
-            if (this.url) {
-                this.newAttachment.url = this.url;
-                if (!this.newAttachment.title) {
-                    this.newAttachment.title = utilService.getFilename(this.url);
-                }
-                console.log(this.newAttachment.title);
-            } else {
-                this.newAttachment.url = res.url;
-                this.newAttachment.title = `${res.original_filename}.${res.format}`;
+        readLink() {
+            const url = this.url
+            this._makeFileObj(url)
+        },
+        _makeId(length = 8) {
+            var text = ''
+            var possible =
+                'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+            for (var i = 0; i < length; i++) {
+                text += possible.charAt(Math.floor(Math.random() * possible.length))
             }
-
-            this.newAttachment.createdAt = Date.now();
+            return text
         },
-
         togglePopup() {
             this.$emit("toggle-popup", "Attachment");
-        },
-        toggleAddName() {
-            //   this.isLinkUrl = !!this.url;
-        },
+        }
+
     },
-    components: { popUp },
+    computed: {
+    },
+    unmounted() { },
 };
 </script>
+ <style>
+ </style>

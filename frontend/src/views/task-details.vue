@@ -47,16 +47,22 @@
         <search-list-modal @memberClicked="toggleMember" :boardMembers="boardMembers" v-if="membersModalIsShow" />
     </section> -->
     <section class="task-details-container" v-if="task">
+        <img class="close-task-svg" @click="closeTask" src="../../src/svgs/close_FILL0_wght400_GRAD0_opsz48.svg"
+            alt="" />
+
         <div>
-            <div class="header">
-                <div class="flex justify-between items-center">
+            <div>
+                <div v-if="task.style" :style="taskCoverStyle" :class="taskCoverClass"
+                    class="task-cover">
+                </div>
+                <div class="header flex justify-between items-center task-details-title">
                     <div class="flex align-center items-center">
                         <img class="header-svg" src="../../src/svgs/screen.svg" alt="" />
                         <h1 class="task-title">{{ task.title }}</h1>
                     </div>
-                    <img class="close-svg" @click="closeTask" src="../../src/svgs/close_FILL0_wght400_GRAD0_opsz48.svg" alt="" />
                 </div>
             </div>
+
 
             <div class="task-content flex justify-between">
                 <div class="task-actions">
@@ -71,6 +77,12 @@
                     <task-checklist v-if="task.checklists" v-for="checklist in task.checklists" :key="checklist.id"
                         class="checklist-container" :checklist="checklist" @save-todo="saveTodo"
                         @delete-checklist="deleteChecklist" />
+
+                    <div>
+                        <task-attachements v-for="attachement in task.attachments" :key="attachement.id"
+                            :attachement="attachement" @removeAttachment="removeAttachment"
+                            @updateAttachment="updateAttachment" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -91,7 +103,8 @@ import taskControl from '../components/task-control.vue'
 import taskChecklist from '../components/task-checklist.vue'
 import taskDuedate from '../components/task-duedate.vue'
 import taskDescription from '../components/task-description.vue'
-import taskLabel from '../components/task-label.vue';
+import taskLabel from '../components/task-label.vue'
+import taskAttachements from '../components/task-attachements.vue'
 
 export default {
 
@@ -120,6 +133,7 @@ export default {
         taskDuedate,
         taskDescription,
         taskLabel,
+        taskAttachements,
     },
     methods: {
         // deleteChecklist(clId) {
@@ -186,13 +200,36 @@ export default {
         async closeTask() {
             const board = await this.$store.getters.currBoard
             this.$router.push(`/board/${board._id}`)
-        }
+        },
+        removeAttachment(attachmentId) {
+            const idx = this.task.attachments.findIndex(attachment => {
+                return attachment.id === attachmentId
+            })
+            this.task.attachments.splice(idx, 1)
+            this.saveTask(this.task)
+        },
+        updateAttachment(updatedAttachment) {
+            const idx = this.task.attachments.findIndex(attachment => {
+                return attachment.id === updatedAttachment.id
+            })
+            this.task.attachments.splice(idx, 1, updatedAttachment)
+            this.saveTask(this.task)
+        },
 
     },
     computed: {
         task() {
             return JSON.parse(JSON.stringify(this.$store.getters.currTask));
         },
+        taskCoverStyle() {
+            if (this.task.style.bgImg)
+                return { backgroundImage: 'url(' + this.task.style.bgImg + ')' }
+            else return { backgroundColor: this.task.style.bgColor }
+        },
+        taskCoverClass() {
+            if (this.task.style.bgImg) return 'task-cover-img'
+            else return 'task-cover-color'
+        }
     }
 }
 //   async created() {
