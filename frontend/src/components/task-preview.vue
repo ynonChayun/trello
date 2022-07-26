@@ -2,7 +2,7 @@
   <Draggable v-if="task">
     <div class="task-preview-container">
       <quick-edit v-if="isQuickEdit" :task="task" />
-      <div @click.stop="isQuickEdit = true" class="edit-task">
+      <div @click.stop="isQuickEdit = true" class="edit-task"></div>
         <div class="edit-task">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="presentation" focusable="false"
             viewBox="0 0 24 24">
