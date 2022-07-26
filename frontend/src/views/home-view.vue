@@ -11,7 +11,7 @@
           </p>
           <button @click="this.$router.push('/board')">Get started</button>
         </div>
-        <img src="../imgs/hero.webp" />
+        <img src="../assets/imgs/hero.webp" />
       </div>
       <div class="main-content">
         <h2>It’s more than work. It’s a way of working together.</h2>

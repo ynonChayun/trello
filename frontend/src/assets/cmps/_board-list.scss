@@ -8,6 +8,11 @@
     grid-column: 2;
   }
   .boards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3.75rem;
+    margin-top: 7rem;
+
     .create-board {
       display: flex;
       justify-content: center;
@@ -26,12 +31,40 @@
       }
     }
 
-    margin-top: 7rem;
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 1em;
-    .board-preview {
+    .starred-boards,
+    .recent-boards {
+      .boards-status {
+        display: flex;
+        gap: 10px;
+        padding: 0 0 0.6875rem;
+
+        span {
+          display: flex;
+          justify-content: center;
+          height: 2rem;
+          width: 2rem;
+        }
+
+        .icon {
+          height: 1.3rem;
+          width: 1.3rem;
+          color: #42526e;
+        }
+        h3 {
+          font-size: 1rem;
+          font-weight: 700;
+        }
+      }
+
+      .boards {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 1em;
+      }
+    }
+
+    .board-link {
       color: white;
       background-color: rgb(62, 62, 104);
       height: 5.875rem;
@@ -42,8 +75,42 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      .board-title {
-        font-weight: 700;
+      position: relative;
+
+      &:hover {
+        .board-preview {
+          .star-icon {
+            .unstarred {
+              display: block;
+            }
+          }
+        }
+      }
+
+      .board-preview {
+        h3 {
+          font-weight: 700;
+        }
+
+        .star-icon {
+          position: absolute;
+          right: 3px;
+          top: 63px;
+          font-size: 0.75rem;
+          transition: 0.15s;
+          .starred {
+            display: block;
+            color: #f2d600;
+          }
+
+          .unstarred {
+            display: none;
+          }
+
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
       }
     }
 

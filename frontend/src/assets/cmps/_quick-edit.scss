@@ -1,0 +1,77 @@
+.quick-card-editor {
+  position: fixed;
+  background: #0009;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 20;
+
+  .quick-edit {
+    display: flex;
+    font-size: 0.875rem;
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    left: 50%;
+  }
+
+  button {
+    border: none;
+    border-radius: 0.1875em;
+  }
+
+  .card-editor {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75em;
+    width: 16rem;
+
+    button {
+      background-color: #0079bf;
+      color: white;
+      padding: 6px 24px 6px 24px;
+      transition: 85ms;
+
+      &:hover {
+        background-color: #026aa7;
+      }
+    }
+
+    .card-details {
+      background-color: white;
+      border-radius: 0.1875em;
+      padding: 10px;
+      width: 100%;
+      textarea {
+        overflow: hidden;
+        min-height: 5.625rem;
+        width: 100%;
+        border: none;
+        outline: none;
+        resize: none;
+      }
+    }
+  }
+
+  .quick-card-editor-buttons {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      width: fit-content;
+      color: #e6e6e6;
+      background-color: #0009;
+      margin: 0 0 4px 8px;
+      padding: 6px 12px 6px 8px;
+      transition: transform 85ms ease-in;
+
+      &:hover {
+        background-color: #000c;
+        color: white;
+        transform: translateX(0.3125em);
+      }
+    }
+  }
+}
