@@ -2,7 +2,8 @@
   <div v-if="!isPopupEdit" class="popup popup-label" ref="popupLabel">
     <div slot="header" class="task-popup-header">
       <h2>Labels</h2>
-      <button @click="togglePopupLabel()">x</button>
+      <img class="close-svg" @click.prevent="togglePopupLabel()" src="../../src/svgs/close_FILL0_wght400_GRAD0_opsz48.svg"
+        alt="" />
     </div>
 
     <div slot="main">
@@ -10,18 +11,21 @@
       <ul v-if="boardLabels" class="clean-list label-list ">
 
         <li v-for="label in boardLabels" :key="label.id" class="flex justify-between label items-center gap-1">
-          <span @click="toggleSelectLabel(label.id)" :class="{ 'label-in-use': isUsed(label.id) }" :style="{
+          <div :class="{ 'label-in-use': isUsed(label.id) }" :style="{
             backgroundColor: label.color
-          }" class="label-title">
-            {{ label.title }}
-            <span v-if="isUsed(label.id)" class="icon v">V</span>
-          </span>
+          }" class="label-main flex justify-between items-center" @click="toggleSelectLabel(label.id)">
+
+            <span  class="label-title">
+              {{ label.title }}
+            </span>
+            <img class="close-svg" v-if="isUsed(label.id)" src="../../src/svgs/check-sign.svg" alt="" />
+          </div>
           <img class="edit-svg" @click="openLabelEdit($event, 'Change', label)" src="../svgs/edit.svg" alt="">
         </li>
 
       </ul>
 
-      <span @click="openLabelEdit($event, 'Create')" class="">
+      <span @click="openLabelEdit($event, 'Create')" class="create-new-label-btn">
         Create a new label
       </span>
     </div>
@@ -90,6 +94,7 @@ export default {
       this.closeLabelEdit();
     },
     async removeBoardLabel(id) {
+      console.log('id: ' , id)
       const labelIdx = this.boardLabels.findIndex((label) => label.id === id);
       if (labelIdx >= 0) this.boardLabels.splice(labelIdx, 1);
       await this.$store.dispatch({
@@ -105,7 +110,6 @@ export default {
       const boardLabels = this.$store.getters.currBoard.labels;
       console.log('boardkabels: ', boardLabels)
       return boardLabels.filter((label) => {
-        // console.log("label:", label);
         return label.title.toLowerCase().includes(this.searchStr.toLowerCase());
       });
     },

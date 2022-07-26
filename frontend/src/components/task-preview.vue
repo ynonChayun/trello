@@ -11,7 +11,7 @@
             </div>
             <div class="task-preview">
                 <p class="task-title">{{ task.title }} </p>
-                <button @click.native="removeTask">X</button>
+                <button @click.stop="removeTask">X</button>
             </div>
         </div>
     </Draggable>

@@ -68,12 +68,12 @@ function _makeId(length = 5) {
 }
 
 // labels cls {
-// 1 - #f2d600
-// 2 - #ff9f1a
-// 3 - #eb5a46
-// 4 - #e377e0
-// 5 - #0079bf
-// 6 - #51e898
+// 1 - #f2d600,
+// 2 - #ff9f1a,
+// 3 - #eb5a46,
+// 4 - #e377e0,
+// 5 - #0079bf,
+// 6 - #51e898,
 // }
 
 function _createBoards() {
@@ -433,27 +433,27 @@ function _createBoards() {
     //       ],
     //     },
     {
-      _id: 'b101',
+      _id: 'b102',
       title: 'sprint 4',
       imgUrl: '../imgs/1.jpg',
     },
     {
-      _id: 'b101',
+      _id: 'b103',
       title: 'sprint 4',
       imgUrl: '../imgs/2.jpg',
     },
     {
-      _id: 'b101',
+      _id: 'b104',
       title: 'sprint 4',
       imgUrl: '../imgs/3.jpg',
     },
     {
-      _id: 'b101',
+      _id: 'b105',
       title: 'sprint 4',
       imgUrl: '../imgs/4.jpg',
     },
     {
-      _id: 'b101',
+      _id: 'b106',
       title: 'sprint 4',
       imgUrl: '../imgs/4.jpg',
     },

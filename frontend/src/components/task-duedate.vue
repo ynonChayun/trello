@@ -4,10 +4,11 @@
     <div class="duedate-date flex items-center gap-1">
       <input class="task-checkbox" type="checkbox" v-model="isComplete" @change="toggleComplete" />
       <div class="flex date">
-        <p v-if="date" class="task-text-details">{{ dueDateFixed }} <span v-if="this.duedate.isComplete">&nbsp - {{
+        <p  @click="togglePopup" v-if="date" class="task-text-details">{{ dueDateFixed }} <span class="task-complete" v-if="this.duedate.isComplete"> {{
             status
         }}</span> </p>
-        <!-- <p v-if="status" class="status" :class="status"> {{status}}</p> -->
+        <popup-duedate v-if="isDuedateOpen" @toggle-popup="togglePopup" @save-date="saveDate"
+          :taskDuedate="task.duedate" ref="Duedate" />
       </div>
     </div>
   </div>
@@ -15,15 +16,21 @@
 
 <script>
 import moment from "moment";
+import popupDuedate from "./popup-duedate.vue";
 
 export default {
   props: {
     duedate: Object,
+    task: Object
   },
   data() {
     return {
       isComplete: null,
+      isDuedateOpen: false,
     };
+  },
+    components: {
+    popupDuedate
   },
   created() {
     this.isComplete = this.duedate.isComplete;
@@ -31,6 +38,18 @@ export default {
   methods: {
     toggleComplete() {
       this.$emit("set-completion", this.isComplete);
+    },
+    togglePopup() {
+      this.isDuedateOpen = !this.isDuedateOpen
+    },
+    async saveTask(task) {
+      await this.$store.dispatch({ type: "saveTask", task });
+    },
+    saveDate(duedate) {
+      this.task.duedate = duedate;
+      const task = JSON.parse(JSON.stringify(this.task))
+      this.togglePopup("Duedate");
+      this.saveTask(task);
     },
   },
   computed: {

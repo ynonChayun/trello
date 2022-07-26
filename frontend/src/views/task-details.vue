@@ -1,64 +1,17 @@
 <template>
-    <!-- <section class="task-details-container" v-if="task">
-
-        <div class="header">
-            <input class="task-title" type="text" v-model="task.title" />
-            <button>x</button>
-        </div>
-
-    <div class="labels">
-      labels
-      <ul>
-        <li v-for="label in task.labelIds">{{ label }}</li>
-      </ul>
-    </div>
-
-    <div class="checklists">
-      checklists
-      <ul>
-        <li v-for="checkList in task.checklists">
-          {{ checkList.title }}
-          <button @click="deleteChecklist(checkList.id)">delete</button>
-        </li>
-      </ul>
-    </div>
-
-    <div class="buttons">
-      <button @click="membersModalIsShow = !membersModalIsShow">Members</button>
-      <button @click="lablesModalIsShow = !lablesModalIsShow">Labels</button>
-      <button>Checklist</button>
-
-
-        <div class="buttons">
-            <button @click="membersModalIsShow = !membersModalIsShow">members</button>
-            <button @click="lablesModalIsShow = !lablesModalIsShow">labels</button>
-
-    <checklist-modal @addChecklist="addChecklist" />
-
-            <date-picker @setDouDate="setDouDate" />
-            <filePicker @atachment="setAtachment" />
-        </div>
-
-        <checklist-modal @addChecklist="addChecklist" />
-
-        <search-list-modal :details="getSearchListDetails('labels')" :selects="task.labelIds"
-            v-if="lablesModalIsShow" />
-
-        <search-list-modal @memberClicked="toggleMember" :boardMembers="boardMembers" v-if="membersModalIsShow" />
-    </section> -->
     <section class="task-details-container" v-if="task">
+
         <img class="close-task-svg" @click="closeTask" src="../../src/svgs/close_FILL0_wght400_GRAD0_opsz48.svg"
             alt="" />
 
         <div>
             <div>
-                <div v-if="task.style" :style="taskCoverStyle" :class="taskCoverClass"
-                    class="task-cover">
+                <div v-if="task.style" :style="taskCoverStyle" :class="taskCoverClass" class="task-cover">
                 </div>
                 <div class="header flex justify-between items-center task-details-title">
-                    <div class="flex align-center items-center">
+                    <div class="flex align-center items-center header-container">
                         <img class="header-svg" src="../../src/svgs/screen.svg" alt="" />
-                        <h1 class="task-title">{{ task.title }}</h1>
+                        <input class="task-title" @change="saveTask(task)" v-model="task.title" />
                     </div>
                 </div>
             </div>
@@ -70,8 +23,10 @@
                 </div>
 
                 <div class="task-main-content">
-                    <task-label v-if="task.labelIds && task.labelIds.length" :taskLabelIds="task.labelIds" />
-                    <task-duedate v-if="task.duedate" :duedate="task.duedate" @set-completion="setCompletion" />
+                    <member-list v-if="task.members && task.members.length" :members="task.members" :task="task"
+                        :isTaskRelated="true" :isInTask="true" @remove-task-member="removeTaskMember" />
+                    <task-label v-if="task.labelIds && task.labelIds.length" :taskLabelIds="task.labelIds" :task="task"/>
+                    <task-duedate v-if="task.duedate" :duedate="task.duedate" @set-completion="setCompletion" :task="task"/>
                     <task-description :description="task.description" @save-desc="saveDescription" />
 
                     <task-checklist v-if="task.checklists" v-for="checklist in task.checklists" :key="checklist.id"
@@ -80,8 +35,8 @@
 
                     <div>
                         <task-attachements v-for="attachement in task.attachments" :key="attachement.id"
-                            :attachement="attachement" @removeAttachment="removeAttachment"
-                            @updateAttachment="updateAttachment" />
+                            :attachement="attachement" :task="task" @removeAttachment="removeAttachment"
+                            @updateAttachment="updateAttachment" @toggleCover="saveTask"/>
                     </div>
                 </div>
             </div>
@@ -105,6 +60,7 @@ import taskDuedate from '../components/task-duedate.vue'
 import taskDescription from '../components/task-description.vue'
 import taskLabel from '../components/task-label.vue'
 import taskAttachements from '../components/task-attachements.vue'
+import memberList from '../components/member-list.vue'
 
 export default {
 
@@ -134,6 +90,7 @@ export default {
         taskDescription,
         taskLabel,
         taskAttachements,
+        memberList,
     },
     methods: {
         // deleteChecklist(clId) {
@@ -170,6 +127,7 @@ export default {
             this.saveTask(task);
         },
         saveTask(task) {
+            console.log('task: ' , task)
             this.$store.dispatch({ type: "saveTask", task });
         },
         saveTodo(checklist) {
@@ -214,6 +172,12 @@ export default {
             })
             this.task.attachments.splice(idx, 1, updatedAttachment)
             this.saveTask(this.task)
+        },
+        removeTaskMember(id) {
+            const memberIdx = this.task.members.findIndex(({ _id }) => _id === id);
+            if (memberIdx < 0) return;
+            this.task.members.splice(memberIdx, 1);
+            this.saveTask(this.task);
         },
 
     },

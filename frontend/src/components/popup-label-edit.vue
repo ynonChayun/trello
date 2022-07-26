@@ -1,27 +1,45 @@
 <template>
-    <section class="label-edit popup">
-        <div>
-            {{ labelToEdit }}
+    <section class="popup">
+        <div v-if="!isDelete" class="label-edit-popup">
             <div slot="header" class="task-popup-header">
                 <h2>{{ action }} label</h2>
-                <button @click="closeLabelEdit" class="btn close icon x"></button>
+                <img class="close-svg" @click="closeLabelEdit" src="../../src/svgs/close_FILL0_wght400_GRAD0_opsz48.svg"
+                    alt="" />
+                <!-- <button @click="closeLabelEdit" class="btn close icon x"></button> -->
             </div>
 
             <div slot="main">
-                <h3>Name</h3>
+                <h3 class="edit-label-title title-m">Name</h3>
                 <input type="text" v-model="labelToEdit.title" />
-                <ul class="clean-list label-color-list">
-                    <li v-for="(color, idx) in colors" :key="'c' + idx" class="label-color">
+                <h3 class="edit-label-title ">Select color</h3>
+                <ul class="clean-list colors">
+                    <li v-for="(color, idx) in colors" :key="'c' + idx" >
                         <button @click="setLabelColor(color.color)" :style="{ 'background-color': color.color }"
                             class="btn color" :class="{ 'color-in-use': color.selected }"></button>
                     </li>
                 </ul>
-                <div class="btn-container">
-                    <button @click="saveLabel" class="btn action narrow">Save</button>
-                    <button @click="toggleIsDelete" class="btn warning narrow">
+                <div class="flex justify-between edit-label-actions">
+                    <button @click="saveLabel" class="add-label-btn">Save</button>
+                    <button @click="toggleIsDelete" class="delete-label-btn">
                         Delete
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <div v-else="isDelete" class="delete-label-popup">
+            <div slot="header" class="task-popup-header">
+                <h2>Delete Label?</h2>
+                <img class="close-svg" @click="toggleIsDelete" src="../../src/svgs/close_FILL0_wght400_GRAD0_opsz48.svg"
+                    alt="" />
+            </div>
+            <div slot="main">
+                <p class="info-delete">
+                    There is no undo. This will remove this label from all cards and destroy its history.
+                </p>
+                <button @click="removeBoardLabel" class="delete-label-btn">
+                    Delete
+                </button>
             </div>
         </div>
 
