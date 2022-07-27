@@ -1,6 +1,7 @@
 <template>
     <section class="flex flex-col task-control">
 
+
         <div class="flex justify-between items-center">
             <h3 class="suggested-settings">Suggested</h3>
             <div class="flex flex-center svg-holder">
@@ -16,8 +17,18 @@
         <h3 class="add-to-card-txt">Add to card</h3>
 
         <div class="action-btn">
-            <img class="close-svg" src="../../src/svgs/user.svg" alt="" />
-            <span class="action-span">Members</span>
+            <img class="close-svg" @click="togglePopup('Member')" src="../../src/svgs/user.svg" alt="" />
+            <span class="action-span" @click="togglePopup('Member')">Members</span>
+            <popup-member v-if="isMemberOpen" :task="task" @toggle-popup="togglePopup"
+                @remove-task-member="removeTaskMember" @assign-task-member="assignTaskMember" />
+        </div>
+
+        <div class="action-btn">
+            <img class="close-svg" @click="togglePopup('Label')" src="../../src/svgs/label.svg" alt="">
+            <span class="action-span" @click="togglePopup('Label')">Labels</span>
+            <popup-label v-if="isLabelOpen" @set-task-labels="setTaskLabels" @toggle-popup="togglePopup" tabindex="0"
+                ref="Label" :task="task">
+            </popup-label>
         </div>
 
         <div class="action-btn">
@@ -33,13 +44,6 @@
                 :taskDuedate="task.duedate" ref="Duedate" />
         </div>
 
-        <div class="action-btn">
-            <img class="close-svg" @click="togglePopup('Label', $event)" src="../../src/svgs/label.svg" alt="">
-            <span class="action-span" @click="togglePopup('Label', $event)">Labels</span>
-            <popup-label v-if="isLabelOpen" @set-task-labels="setTaskLabels" @toggle-popup="togglePopup" tabindex="0"
-                ref="Label" :task="task">
-            </popup-label>
-        </div>
 
         <div class="action-btn">
             <img class="close-svg" @click="togglePopup('Attachment')" src="../../src/svgs/attachment.svg" alt="">
@@ -51,7 +55,8 @@
         <div class="action-btn">
             <img class="close-svg" @click="togglePopup('Cover')" src="../../src/svgs/screen.svg" alt="">
             <span class="action-span" @click="togglePopup('Cover')">Cover</span>
-            <popup-cover v-if="isCoverOpen" :task="task" @setCoverColor="saveTask" @setCoverImg="saveTask"  @toggle-popup="togglePopup" @removeCover="saveTask"/>
+            <popup-cover v-if="isCoverOpen" :task="task" @setCoverColor="saveTask" @setCoverImg="saveTask"
+                @toggle-popup="togglePopup" @removeCover="saveTask" @attachFile="saveAttachments" />
         </div>
 
     </section>
@@ -64,6 +69,8 @@ import popupDuedate from './popup-duedate.vue'
 import popupLabel from './popup-label.vue'
 import popupAttachment from './popup-attachment.vue';
 import popupCover from './popup-cover.vue';
+import popupMember from './popup-member.vue'
+
 
 
 export default {
@@ -75,7 +82,8 @@ export default {
         popupDuedate,
         popupLabel,
         popupAttachment,
-        popupCover
+        popupCover,
+        popupMember,
     },
     data() {
         return {
@@ -84,13 +92,11 @@ export default {
             isLabelOpen: false,
             isAttachmentOpen: false,
             isCoverOpen: false,
-
-
+            isMemberOpen: false
         }
     },
     methods: {
         togglePopup(str) {
-            console.log('hi')
             var dataStr = `is${str}Open`;
             this[dataStr] = !this[dataStr];
         },
@@ -108,8 +114,6 @@ export default {
             await this.$store.dispatch({ type: "saveTask", task });
         },
         saveDate(duedate) {
-            console.log('hiiiiiii')
-            console.log('duedate: ', duedate)
             this.task.duedate = duedate;
             const task = JSON.parse(JSON.stringify(this.task))
             this.togglePopup("Duedate");
@@ -125,6 +129,19 @@ export default {
             if (!this.task.attachments) this.task.attachments = []
             this.task.attachments.push(file)
             console.log(this.task.attachments)
+            const task = JSON.parse(JSON.stringify(this.task))
+            this.saveTask(task)
+        },
+        assignTaskMember(member) {
+            if (!this.task.members) this.task.members = [];
+            this.task.members.push(member);
+            const task = JSON.parse(JSON.stringify(this.task))
+            this.saveTask(task)
+        },
+        removeTaskMember(id) {
+            const memberIdx = this.task.members.findIndex(({ _id }) => _id === id);
+            if (memberIdx < 0) return;
+            const deletedMember = this.task.members.splice(memberIdx, 1);
             const task = JSON.parse(JSON.stringify(this.task))
             this.saveTask(task)
         },

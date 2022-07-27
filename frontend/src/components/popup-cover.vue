@@ -6,7 +6,7 @@
                 alt="" />
         </div>
         <div>
-            <button @click="removeCover">remove cover</button>
+            <button @click="removeCover" class="remove-cover-btn">remove cover</button>
             <div>
                 <span>Colors</span>
                 <div class="colors">
@@ -23,8 +23,8 @@
                 </div>
 
                 <div class="upload">
-                    <span>Upload a cover image</span>
-                    <input @change="addFile" type="file" />
+                    <label class="remove-cover-btn" for="file">Upload a cover image</label>
+                    <input @change="addFile" type="file" id="file" style="display: none"/>
                 </div>
             </div>
             <div>

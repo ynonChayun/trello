@@ -8,15 +8,15 @@
         <div slot="main">
             <ul>
                 <div class="computer">
-                    <li class="cmp">Computer</li>
-                    <input @change="addFile" type="file">
+                    <input @change="addFile" type="file"  id="file" style="display: none">
+                    <label for="file">Computer</label>
                 </div>
             </ul>
 
             <form @submit.prevent="readLink" class="link-box">
-                <span class="link">Attach a link</span>
-                <input v-model="url" type="url">
-                <button>Attach</button>
+                <span class="add-attach-title">Attach a link</span>
+                <input v-model="url" type="url" class="attach-title-input">
+                <button class="add-attach-btn">Attach</button>
             </form>
 
 

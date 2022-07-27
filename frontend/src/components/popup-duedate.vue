@@ -1,27 +1,20 @@
 <template>
-    <!-- <pop-up class="popup popup-duedate"> -->
     <div class="popup popup-duedate">
-
         <div slot="header" class="task-popup-header">
             <h2>Change due date</h2>
             <button @click="togglePopup" class="btn close">X</button>
         </div>
-        <div slot="main">
-            <!-- <datepicker :inline="true" :value="this.date" @selected="setDate">
-            </datepicker> -->
+        <div slot="main duedate-main">
             <el-date-picker v-model="value1" type="date" placeholder="Pick a date"
                 :default-value="new Date(2022, 9, 1)" />
-            <!-- <div class="date-input-container">
-                <input class="date" type="checkbox" v-model="isDuedate" />
-                <input class="date" type="text" v-model="day" />
-                <input class="date" type="text" v-model="hour" />
-            </div> -->
-            <button class="btn action wide duedate-submit" @click="saveDate">
+            <button class="duedate-btn save-duedate-btn" @click="saveDate">
                 Save
+            </button>
+            <button class="duedate-btn remove-duedate-btn" @click="removeDate">
+                Remove
             </button>
         </div>
     </div>
-    <!-- </pop-up> -->
 </template>
 
 <script>
@@ -61,12 +54,14 @@ export default {
             this.$emit("toggle-popup", "Duedate");
         },
         saveDate() {
-            console.log('date:', this.value1)
-            // this.isDuedate.date = this.value1
-            // console.log('this.isDuedate: ' , this.isDuedate)
+            // console.log('date:', this.value1)
             if (this.isDuedate)
                 this.$emit("save-date", { date: this.value1, isComplete: false })
             else this.$emit("save-date", { date: '', isComplete: false });
+        },
+        removeDate() {
+            // console.log('date:', this.value1)
+            this.$emit("save-date", { date: '', isComplete: '' })
         },
     },
     computed: {

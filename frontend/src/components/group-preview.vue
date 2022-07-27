@@ -22,7 +22,7 @@
                 :isEditFirst="true" @close-textarea="isAddNewTask = false" @addTask="addTask" />
         </div>
     </section> -->
-      
+
 
     <section class="group-preview">
         <group-actions-modal @close-group-actions="this.closeGroupActions" v-if="isGroupActionsShow" />
@@ -31,21 +31,21 @@
             <header class="flex flex-center group-header">
                 <input class="input-title" @change="saveGroup" v-model="group.title" />
                 <div class="more-options">
-                    <svg @click="isGroupActionsShow = true" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1rem"
-                        width="1rem" xmlns="http://www.w3.org/2000/svg">
+                    <svg @click="isGroupActionsShow = true" stroke="currentColor" fill="currentColor" stroke-width="0"
+                        viewBox="0 0 512 512" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="256" cy="256" r="48"></circle>
                         <circle cx="416" cy="256" r="48"></circle>
                         <circle cx="96" cy="256" r="48"></circle>
                     </svg>
                 </div>
             </header>
-
             <Container class="tasks-wrapper " orientation="vertical" group-name="col-items"
                 :shouldAcceptDrop="(e, payload) => (e.groupName === 'col-items' && !payload.loading)"
-                :get-child-payload="getCardPayload(group.id)" @drop="onCardDrop(group.id, $event)">
+                :get-child-payload="getCardPayload(group.id)" @drop="(e) => onCardDrop(group, e)">
 
-                <task-preview class="task" @removeTask="removeTask" @click.native="goToEdit(task, task.id)"
-                    v-for="task in group.tasks" :boardId="board._id" :groupId="group.id" :task="task" :key="task.id" />
+                <task-preview v-for="task in group.tasks" key="task.id" class="task" @removeTask="removeTask"
+                    @click="goToEdit(task, task.id)" :boardId="board._id" :groupId="group.id" :task="task">
+                </task-preview>
             </Container>
 
             <footer>
@@ -69,7 +69,7 @@
                             <path fill="none" stroke="#000" stroke-width="2" d="M3,3 L21,21 M3,21 L21,3"></path>
                         </svg>
                     </div>
-                    
+
                 </form>
             </footer>
         </div>
@@ -97,16 +97,17 @@ export default {
         editableTitle,
         editableText,
         groupActionsModal,
+        Draggable,
     },
     data() {
         return {
-             isGroupActionsShow : false,
+            isGroupActionsShow: false,
             newTask: JSON.parse(JSON.stringify(this.$store.getters.getEmptyTask)),
             isAddNewTask: false,
         }
     },
     methods: {
-        closeGroupActions(){
+        closeGroupActions() {
             this.isGroupActionsShow = false
         },
         async removeTask(taskId) {
@@ -143,22 +144,28 @@ export default {
             return (index) => {
                 return this.board.groups.filter((p) => p.id === groupId)[0].tasks[index]
             }
+            // return this.group.tasks[idx]
+
         },
-        async onCardDrop(groupId, dropResult) {
-            if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-
-                const updatedBoard = Object.assign({}, JSON.parse(JSON.stringify(this.board)))
-                const group = updatedBoard.groups.filter((p) => p.id === groupId)[0]
-                const itemIndex = updatedBoard.groups.indexOf(group)
-                const newColumn = Object.assign({}, JSON.parse(JSON.stringify(group)))
-
-                newColumn.tasks = await applyDrag(newColumn.tasks, dropResult)
-                console.log('newColumn: ', newColumn)
-                console.log('itemIndex: ', itemIndex)
-                console.log('updatedBoard: ', updatedBoard)
-
-                await this.$store.dispatch({ type: "saveGroup", group: newColumn });
+        async onCardDrop(group, dropResult) {
+            group.tasks = this.applyDrag(group.tasks, dropResult);
+            this.$store.dispatch({ type: 'saveBoard', board: this.board });
+        },
+        applyDrag(arr, dragResult) {
+            const { removedIndex, addedIndex, payload } = dragResult;
+            if (removedIndex === null && addedIndex === null) return arr;
+            const result = [...arr];
+            // console.log(payload)
+            // console.log(JSON.parse(JSON.stringify(payload)))
+            let itemToAdd = payload;
+            if (removedIndex !== null) {
+                itemToAdd = result.splice(removedIndex, 1)[0];
             }
+            if (addedIndex !== null) {
+                result.splice(addedIndex, 0, itemToAdd);
+            }
+            console.log('result: ', result)
+            return result;
         },
         async saveGroup() {
             const group = Object.assign({}, this.group)
@@ -174,3 +181,43 @@ export default {
 
 <style lang="scss" scoped>
 </style>
+<!-- 
+onDrop(dropResult) {
+      //        var currFilter = this.$store.getters.filterBy?this.$store.getters.filterBy:'';
+      // if(!(!currFilter || currFilter.title !== '' || currFilter.user !== '')) return
+      this.group.tasks = this.applyDrag(this.group.tasks, dropResult);
+      this.$store.dispatch({ type: 'updateBoard', board: this.board });
+    },
+
+        async onCardDrop(groupId, dropResult) {
+            if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
+
+                const updatedBoard = Object.assign({}, JSON.parse(JSON.stringify(this.board)))
+                const group = updatedBoard.groups.filter((p) => p.id === groupId)[0]
+                const itemIndex = updatedBoard.groups.indexOf(group)
+                const newColumn = Object.assign({}, JSON.parse(JSON.stringify(group)))
+
+                newColumn.tasks = await applyDrag(newColumn.tasks, dropResult)
+                await this.$store.dispatch({ type: "saveGroup", group: newColumn });
+            }
+        }, -->
+
+        <!-- async onCardDrop({ cards, groupId }) {
+      try {
+        const board = JSON.parse(JSON.stringify(this.board))
+        const idx = this.board.groups.findIndex((group) => group.id === groupId)
+        board.groups[idx].cards = cards
+        if (this.groupsCount === 0) {
+          this.lastBoard = JSON.parse(JSON.stringify(this.board))
+        }
+        this.board = board
+        this.groupsCount++
+        if (this.groupsCount === this.board.groups.length) {
+          await this.$store.dispatch({ type: 'saveBoard', board })
+          this.groupsCount = 0
+        }
+      } catch (err) {
+        console.log('err', err)
+        this.board = this.lastBoard
+      }
+    }, -->

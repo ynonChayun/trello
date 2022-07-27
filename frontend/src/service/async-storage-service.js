@@ -68,20 +68,22 @@ function _makeId(length = 5) {
 }
 
 // labels cls {
-// 1 - #f2d600
-// 2 - #ff9f1a
-// 3 - #eb5a46
-// 4 - #e377e0
-// 5 - #0079bf
-// 6 - #51e898
+// 1 - #f2d600,
+// 2 - #ff9f1a,
+// 3 - #eb5a46,
+// 4 - #e377e0,
+// 5 - #0079bf,
+// 6 - #51e898,
 // }
 
 function _createBoards() {
   const boards = [
     {
       _id: 'b101',
-      title: 'sprint 4',
-      imgUrl: '../imgs/2.jpg',
+      title: 'sprint 7',
+      imgUrl:
+        'https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+      isStarred: true,
       archivedAt: 1589983468418,
       createdAt: 1589983468418,
       createdBy: {
@@ -125,13 +127,18 @@ function _createBoards() {
       members: [
         {
           _id: 'u101',
-          fullname: 'Tal Tarablus',
-          imgUrl: 'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg',
+          fullname: 'Amit Sharafi',
+          imgUrl: '../assets/imgs/amit-profile.jpg',
         },
         {
           _id: 'u102',
           fullname: 'Ynon Chayun',
-          imgUrl: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg',
+          imgUrl: '',
+        },
+        {
+          _id: 'u103',
+          fullname: 'Yuval Levi',
+          imgUrl: '',
         },
       ],
       groups: [
@@ -274,29 +281,39 @@ function _createBoards() {
     },
 
     {
-      _id: 'b101',
+      _id: 'b102',
       title: 'sprint 4',
-      imgUrl: '../imgs/1.jpg',
+      imgUrl:
+        'https://images.unsplash.com/photo-1658276557505-a63c03fd332a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+      isStarred: true,
     },
     {
-      _id: 'b101',
-      title: 'sprint 4',
-      imgUrl: '../imgs/2.jpg',
+      _id: 'b103',
+      title: 'sprint 1',
+      imgUrl:
+        'https://images.unsplash.com/photo-1657089342023-13325d7bfe10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+      isStarred: true,
     },
     {
-      _id: 'b101',
-      title: 'sprint 4',
-      imgUrl: '../imgs/3.jpg',
+      _id: 'b104',
+      title: 'sprint 2',
+      imgUrl:
+        'https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=975&q=80',
+      isStarred: false,
     },
     {
-      _id: 'b101',
+      _id: 'b105',
       title: 'sprint 4',
-      imgUrl: '../imgs/4.jpg',
+      imgUrl:
+        'https://images.unsplash.com/photo-1656366631858-6d5ba6f5a58c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+      isStarred: true,
     },
     {
-      _id: 'b101',
+      _id: 'b106',
       title: 'sprint 4',
-      imgUrl: '../imgs/4.jpg',
+      imgUrl:
+        'https://images.unsplash.com/photo-1519010470956-6d877008eaa4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80',
+      isStarred: false,
     },
   ]
 

@@ -66,6 +66,7 @@ export const boardStore = {
     async saveBoard({ commit }, { board }) {
       try {
         const savedBoard = await boardService.save(board)
+        console.log('savedBoard: ' , savedBoard)
         commit({ type: 'saveBoard', savedBoard })
         commit({ type: 'setCurrBoard', board: savedBoard })
       } catch (err) {
@@ -90,7 +91,9 @@ export const boardStore = {
       }
     },
     async saveGroup({ state, commit, dispatch }, { group }) {
+      console.log('group: ' , group)
       const board = JSON.parse(JSON.stringify(state.currBoard))
+      console.log('board before: ' , board)
       if (group.id) {
         const groupIdx = board.groups.findIndex(({ id }) => id === group.id)
         board.groups.splice(groupIdx, 1, group)
@@ -98,8 +101,9 @@ export const boardStore = {
         group.id = boardService._makeId()
         board.groups.push(group)
       }
+      console.log('borad after: ' , board)
       await dispatch({ type: 'saveBoard', board })
-      commit({ type: 'setCurrBoard', board })
+      // await commit({ type: 'setCurrBoard', board })
     },
     async saveTask(
       { commit, state, dispatch },

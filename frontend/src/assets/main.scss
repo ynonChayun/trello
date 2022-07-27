@@ -8,11 +8,28 @@
 // CMPS
 @import 'cmps/task-details';
 @import 'cmps/app-header';
-@import 'cmps/task-screen';
 @import 'cmps/popup';
 @import 'cmps/group-preview';
 @import 'cmps/group-actions-modal.scss';
 @import 'cmps/task-preview';
 @import 'views/board-view.scss';
 @import './cmps/_board-list';
+@import './cmps/quick-edit';
 @import './cmps/board-header';
+
+
+
+@import 'cmps/task-screen';
+@import './cmps/task-control';
+@import './cmps/task-duedate';
+@import './cmps/task-checklist';
+@import './cmps/task-description';
+@import './cmps/task-labels';
+@import './cmps/task-attachement';
+@import './cmps/task-member';
+@import './cmps/popup-task-label';
+@import './cmps/popup-task-checklist';
+@import './cmps/popup-task-cover';
+@import './cmps/popup-task-duedate';
+@import './cmps/popup-task-member';
+@import './cmps/popup-task-attachment';
