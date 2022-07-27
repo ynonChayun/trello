@@ -44,7 +44,7 @@
                 :get-child-payload="getCardPayload(group.id)" @drop="(e) => onCardDrop(group, e)">
 
                 <task-preview v-for="task in group.tasks" key="task.id" class="task" @removeTask="removeTask"
-                    @click="goToEdit(task, task.id)" :boardId="board._id" :groupId="group.id" :task="task">
+                    @click="goToEdit(task, task.id)" :boardId="board._id" :groupId="group.id" :task="task" @editIsToggle="onEditIsToggle">
                 </task-preview>
             </Container>
 
@@ -173,6 +173,9 @@ export default {
         },
         undoAddTask() {
             this.isAddNewTask = false
+        },
+        onEditIsToggle() {
+            this.$emit('onEditIsToggle')
         }
     }
 
