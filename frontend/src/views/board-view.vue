@@ -1,4 +1,7 @@
 <template>
+
+  <div :style="boradClass"> </div>
+
   <section class="board-view">
     <board-header v-if="board" @board-starred="saveBoard" @title-change="saveBoard" :board="board" />
     <router-view></router-view>
@@ -8,7 +11,7 @@
           <Draggable v-for="(group, idx) in board.groups" :key="group.id">
             <div>
               <group-preview class="group-container" @saveBoard="saveBoard" :key="group.id" :group="group"
-                :boardId="board._id" :idx="idx" :board="board" />
+                :boardId="board._id" :idx="idx" :board="board" @onEditIsToggle="editIsToggle" />
             </div>
           </Draggable>
 
@@ -62,6 +65,7 @@ export default {
       // currBoard: null,
       isAddNewGroup: false,
       newGroup: JSON.parse(JSON.stringify(this.$store.getters.getEmptyGroup)),
+      blackScreen: false,
     }
   },
   async created() {
@@ -94,11 +98,27 @@ export default {
         JSON.stringify(this.$store.getters.getEmptyGroup)
       );
     },
+    editIsToggle() {
+      this.blackScreen = !this.blackScreen
+    }
   },
   computed: {
     board() {
       return this.$store.getters.currBoard
     },
+    boradClass() {
+      if (this.blackScreen) return {
+        "backgroundColor": '#000000a3',
+        "z-index": "10",
+        // "width": "100vh",
+        "height": "100%",
+        "position": 'fixed',
+        "right": '0',
+        "left": '0',
+        "top": '0',
+        "bottom": '0',
+      }
+    }
   },
   unmounted() { },
 }

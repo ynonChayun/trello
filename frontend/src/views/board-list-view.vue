@@ -32,17 +32,17 @@
             :board="board"
             :key="board._id"
           />
-          <div class="create-board">Create new board</div>
+          <div class="create-board" @click="isCreate = !isCreate">Create new board</div>
+          <popup-add-board v-if="isCreate" @togglePopup="isCreate = !isCreate" />
         </div>
       </div>
-      <popup-create @createdBoard="saveBoard" />
     </div>
   </section>
 </template>
 
 <script>
 import boardPreview from '../components/board-preview.vue'
-import popupCreate from '../components/popup-create.vue'
+import popupAddBoard from '../components/popup-add-board.vue'
 export default {
   data() {
     return {
@@ -76,7 +76,7 @@ export default {
 
   components: {
     boardPreview,
-    popupCreate,
+    popupAddBoard,
   },
 }
 </script>

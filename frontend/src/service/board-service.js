@@ -14,6 +14,7 @@ export const boardService = {
   _makeId,
   saveTask,
   getFilename,
+  getEmptyBoard,
 }
 
 function query() {
@@ -24,19 +25,19 @@ function getById(boardId) {
   return storageService.get(STORAGE_KEY, boardId)
 }
 
-function getEmptyBoard() {
-  return {
-    title: '',
-    severity: '',
-  }
-}
+// function getEmptyBoard() {
+//   return {
+//     title: '',
+//     severity: '',
+//   }
+// }
 
 function remove(boardId) {
   return storageService.remove(STORAGE_KEY, boardId)
 }
 
 function save(board) {
-  console.log('borad: ' , board)
+  console.log('borad: ', board)
   if (board._id) {
     return storageService.put(STORAGE_KEY, board)
   } else {
@@ -64,6 +65,37 @@ function getEmptyGroup() {
     tasks: [],
     style: {},
   }
+}
+
+function getEmptyBoard() {
+  return {
+    _id: "",
+    title: "",
+    isStarred: false,
+    createdAt: Date.now() - 100000,
+    labelsOpen: false,
+    style: {
+      bgCover: 'https://images.unsplash.com/photo-1561912847-95100ed8646c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+      bgColor: '',
+
+    },
+    createdBy: {},
+    labels: [],
+    members: [],
+    groups: [
+      { id: _makeId(), title: "To do", tasks: [] },
+      {
+        id: _makeId(),
+        title: "Doing",
+        tasks: [],
+      },
+      {
+        id: _makeId(),
+        title: "Done",
+        tasks: [],
+      },
+    ],
+  };
 }
 
 function _makeId(length = 5) {
@@ -102,15 +134,15 @@ function getTask({ boardId, groupId, taskId }) {
 function getFilename(url) {
   const urlSplit = url.split('?');
   if (urlSplit.length > 1) {
-      urlSplit.pop();
-      url = urlSplit[0];
+    urlSplit.pop();
+    url = urlSplit[0];
   } else url = urlSplit.pop();
   const filename = url.split('/').pop();
   return filename;
 }
 
 
-async function uploadImg (file) {
+async function uploadImg(file) {
   // Defining our variables
   const UPLOAD_PRESET = 'ifat-unsigned' // Insert yours
   const CLOUD_NAME = 'ifats-cloud' // Insert yours
@@ -122,9 +154,9 @@ async function uploadImg (file) {
   console.log('uploadImg -> FORM_DATA', FORM_DATA)
   // Sending a post method request to Cloudniarys' API
   try {
-      const res = await axios.post(UPLOAD_URL, FORM_DATA)
-      return res.data;
+    const res = await axios.post(UPLOAD_URL, FORM_DATA)
+    return res.data;
   } catch (err) {
-      console.error('ERROR!', err)
+    console.error('ERROR!', err)
   }
 }

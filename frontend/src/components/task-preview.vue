@@ -1,8 +1,7 @@
 <template>
   <Draggable v-if="task">
     <div class="task-preview-container">
-      <quick-edit v-if="isQuickEdit" :task="task" />
-      <div @click.stop="isQuickEdit = true" class="edit-task"></div>
+      <div @click.stop="openQuickEdit($event)" class="edit-task">
         <div class="edit-task">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="presentation" focusable="false"
             viewBox="0 0 24 24">
@@ -11,12 +10,17 @@
               fill="currentColor" />
           </svg>
         </div>
-        <div class="task-preview">
-          <p class="task-title">{{ task.title }} </p>
-          <button @click.stop="removeTask">X</button>
-        </div>
       </div>
+      <div class="task-preview">
+        <p class="task-title">{{ task.title }} </p>
+        <button @click.stop="removeTask">X</button>
+      </div>
+      <quick-edit @click.stop v-if="isQuickEdit" :task="task" :boardId="boardId" :groupId="groupId" :position="position"
+        @togglePopup="closeEdit" @taskEdited="saveTask" />
+    </div>
   </Draggable>
+
+
 </template>
 
 <script>
@@ -29,6 +33,12 @@ export default {
   data() {
     return {
       isQuickEdit: false,
+      quickEditDisplay: 'none',
+      position: {
+        top: null,
+        left: null,
+        width: null,
+      }
     }
   },
   props: {
@@ -41,6 +51,35 @@ export default {
       const id = this.task.id
       this.$emit('removeTask', id)
     },
+    openQuickEdit(ev) {
+      const { left, right, top, bottom, width } = ev.target.getBoundingClientRect()
+      this.position.left = left
+      this.position.top = top
+      this.position.width = width
+      this.isQuickEdit = !this.isQuickEdit
+      this.$emit('editIsToggle')
+    },
+    closeEdit() {
+      this.isQuickEdit = false
+      this.$emit('editIsToggle')
+    },
+    async saveTask(task) {
+      await this.$store.dispatch({ type: "saveTask", task });
+      this.closeEdit()
+    },
   },
+  computed: {
+    // taskPlace() {
+    //   return {
+    //     "position": 'fixed',
+    //     "top": this.top + 'px',
+    //     "width": this.width + 'px',
+    //     // "bottom": this.bottom + 'px',
+    //     "left": this.left + 'px',
+    //     // "right": this.right + 'px',
+    //     "z-index": 10,
+    //   }
+    // }
+  }
 }
 </script>
