@@ -1,5 +1,5 @@
 <template>
-    <<<<<<< HEAD <Draggable v-if="task">
+    <Draggable v-if="task">
         <div class="task-preview-container">
 
             <div @click.stop="openQuickEdit($event)" class="edit-task">
@@ -112,7 +112,7 @@
             </section>
 
         </div>
-        </Draggable>
+    </Draggable>
 </template>
 
 <script>
