@@ -19,7 +19,9 @@
 
                 <div class="task-content">
 
-                    <task-label :taskLabelIds="task.labelIds" class="labels-container" />
+                    <task-label @click.stop="isSmallLabels = !isSmallLabels" :taskLabelIds="task.labelIds"
+                        :isInTask="false" class="labels-container"
+                        :class="{ 'small-labels': isSmallLabels, 'normal-labels': !isSmallLabels }" />
 
                     <p>{{ task.title }}</p>
 
@@ -49,7 +51,7 @@
                                 }}</span>
                             </div>
 
-                            <div class="activities-counter">
+                            <div class="activities-counter" v-if="task.activities && task.activities.length">
                                 <svg class="activities" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="17px" height="17px"
                                     viewBox="0 0 26 26" version="1.1">
@@ -63,10 +65,11 @@
                                     </g>
                                 </svg>
 
-                                <span>3</span>
+                                <span>{{ task.activities.length }}</span>
                             </div>
 
-                            <div class="atachments-counter" v-if="task.attachments">
+
+                            <div class="atachments-counter" v-if="task.attachments && task.attachments.length">
                                 <svg class="atach" xmlns="http://www.w3.org/2000/svg" width="17px" height="17px"
                                     viewBox="0 0 24 24" fill="#5e6c84">
                                     <path
@@ -76,14 +79,50 @@
                                 <span>{{ task.attachments.length }}</span>
                             </div>
 
+                            <!-- &***********&&&&&&&&&&&&&&*************((((((((((*&^%$#@@)))))))))) -->
+                            <div @click.stop="toggleComplete" @mouseenter="duedateIsHover = true" @mouseleave="duedateIsHover = false"
+                                class="dueDate" v-if="task.duedate && task.duedate.date"
+                                :class="{ 'competed': task.duedate.isComplete }">
+
+                                <div class="icon">
+                                    <svg v-if="!duedateIsHover" stroke="currentColor" fill="currentColor"
+                                        stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill="none" stroke-miterlimit="10" stroke-width="50" stroke="#ffffff"
+                                            d="M256 64C150 64 64 150 64 256s86 192 192 192 192-86 192-192S362 64 256 64z">
+                                        </path>
+                                        <path fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="50" d="M256 128v144h96" stroke="#ffffff"></path>
+                                    </svg>
+                                    <div class="complete-icon" v-else >
+                                        <svg v-if="!task.duedate.isComplete" stroke="#ffffff" fill="#ffffff"
+                                            stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke="#ffffff"
+                                                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z">
+                                            </path>
+                                        </svg>
+                                        <div v-else class="completed-icon">
+                                            <svg class="checklists" stroke="currentColor" fill="#ffffff"
+                                                stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
+                                                xmlns="http://www.w3.org/2000/svg" style="filter: none;">
+                                                <path
+                                                    d="M168.531 215.469l-29.864 29.864 96 96L448 100l-29.864-29.864-183.469 182.395-66.136-65.062zm236.802 189.864H106.667V106.667H320V64H106.667C83.198 64 64 83.198 64 106.667v298.666C64 428.802 83.198 448 106.667 448h298.666C428.802 448 448 428.802 448 405.333V234.667h-42.667v170.666z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="duedate-span">{{ getComputedDuedate }}</span>
+
+                            </div>
+
                         </div>
 
-                        <ul class="members">
-                            <li v-for="member in task.members" class="avater">
-                                <img v-if="member.imgUrl" :src="member.imgUrl">
-                                <span v-else-if="member.fullname">{{ getFirstsChars }}</span>
-                            </li>
-                        </ul>
+                        <div class="members">
+                            <member-list :task="task" :isTaskRelated="false" :isInTask="false"
+                                :members="task.members" />
+                        </div>
                     </div>
 
                 </div>
@@ -119,13 +158,15 @@
 import { Draggable } from 'vue3-smooth-dnd'
 import taskLabel from '../components/task-label.vue'
 import quickEdit from './quick-edit.vue'
-
+import memberList from '../components/member-list.vue'
 export default {
     name: "KanbanItem",
     components: {
         Draggable,
         taskLabel,
         quickEdit,
+        memberList,
+
 
     },
     data() {
@@ -136,7 +177,9 @@ export default {
                 top: null,
                 left: null,
                 width: null,
-            }
+            },
+            isSmallLabels: true,
+            duedateIsHover: false
         }
     },
     props: {
@@ -145,6 +188,9 @@ export default {
         groupId: String,
     },
     methods: {
+        toggleComplete() {
+            this.task.duedate.isComplete = !this.task.duedate.isComplete
+        },
         removeTask() {
             const id = this.task.id
             this.$emit('removeTask', id)
@@ -176,8 +222,15 @@ export default {
 
             return donesCheclists
         },
-        getFirstsChars() {
-            return 'YL'
+        getComputedDuedate() {
+            const dateAsArray = this.task.duedate.date.split('-')
+            const mount = dateAsArray[1] - 1
+            const day = dateAsArray[2].substring(0, dateAsArray[2].indexOf('T'))
+            const computedDay = day[0] === '0' ? day[1] : day
+
+            const mountNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            return mountNames[mount] + ' ' + computedDay
         }
     }
 

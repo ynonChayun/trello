@@ -25,7 +25,7 @@
                 <div class="task-main-content">
                     <member-list v-if="task.members && task.members.length" :members="task.members" :task="task"
                         :isTaskRelated="true" :isInTask="true" @remove-task-member="removeTaskMember" />
-                    <task-label v-if="task.labelIds && task.labelIds.length" :taskLabelIds="task.labelIds" :task="task"/>
+                    <task-label v-if="task.labelIds && task.labelIds.length" :isInTask="true" :taskLabelIds="task.labelIds" :task="task"/>
                     <task-duedate v-if="task.duedate" :duedate="task.duedate" @set-completion="setCompletion" :task="task"/>
                     <task-description :description="task.description" @save-desc="saveDescription" />
 
@@ -66,18 +66,11 @@ export default {
 
     data() {
         return {
-            // task: null,
             boardLabels: null,
             boardMembers: null,
             lablesModalIsShow: false,
             membersModalIsShow: false,
         }
-    },
-    async created() {
-        // this.boardLabels = this.$store.getters.boardLabels
-        // this.boardMembers = this.$store.getters.boardMembers
-        // const task = await boardService.getTask(this.$route.params)
-        // this.task = JSON.parse(JSON.stringify(task))
     },
     components: {
         searchListModal,
@@ -100,7 +93,6 @@ export default {
             this.saveTask(task);
         },
         saveTask(task) {
-            console.log('task: ' , task)
             this.$store.dispatch({ type: "saveTask", task });
         },
         saveTodo(checklist) {
@@ -124,7 +116,6 @@ export default {
             this.saveTask(this.task);
         },
         saveDescription(description) {
-            console.log('description: ', description)
             this.task.description = description
             this.saveTask(this.task)
         },

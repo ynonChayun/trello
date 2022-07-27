@@ -1,8 +1,9 @@
 .board-view {
   width: 100%;
-  height: 98vh;
-  padding-top: 44px;
-  overflow-x: scroll;
+  height: 100vh;
+  padding-top: 90px;
+  overflow-x: auto;
+  // overflow-y:hidden;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -12,8 +13,8 @@
   height: fit-content;
 
   & .btn-add-group {
-    height: 42px;
-    padding: 11px 8px;
+    padding: rem(11px) rem(8px);
+    margin-inline-start: .25rem;
     background-color: #ffffff3d;
     cursor: pointer;
     border: none;
@@ -22,9 +23,9 @@
 
     transition: background-color 85ms ease-in;
     color: white;
-    width: 250px;
+    width: rem(250px);
     text-align: start;
-    border-radius: 3px;
+    border-radius: rem(3px);
   }
 
   &:hover {
@@ -32,6 +33,9 @@
   }
 
   & form {
-    padding-inline-start: 0.25rem;
+    padding-inline: .5rem;
+    & input{
+      margin-block: .5rem;
+    }
   }
 }

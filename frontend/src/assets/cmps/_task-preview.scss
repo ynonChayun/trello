@@ -40,64 +40,117 @@
 
 
 .task-content {
-  padding: .25rem;
+  padding: .5rem;
+  padding-inline-end: .15rem;
 
-  & .labels-container {
+
+
+
+  .labels-container {
     & li {
-      text-indent: -9999px;
-      height: .5rem;
-      width: 40px;
       border-radius: .25rem;
-      margin-inline-end: 3px;
+      margin-inline-end: rem(3px);
+      margin-block-end: rem(3px);
+    }
+
+    &:hover {
+      filter: brightness(0.85);
+    }
+
+    &.small-labels {
+      & li {
+        text-indent: -9999px;
+        height: .5rem;
+        width: 40px;
+
+        transition: height .3s, min-width .8s;
+      }
+    }
+
+    &.normal-labels {
+      & li {
+        font-size: rem(12px);
+        font-weight: 700;
+        height: 1rem;
+        color: #fff;
+        min-width: rem(56px);
+        padding-inline: .5rem;
+        transition: height .6s, min-width .3s;
+      }
     }
   }
+
 
   & .task-badges {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    margin-block-start: rem(10px);
+
+    & .dueDate {
+      &:hover{
+          filter: brightness(0.85);
+      }
+
+      &.competed{
+        background-color: #61bd4f;
+        &:hover{
+          background-color: #519839;
+        }
+      }
+      background-color: #eb5a46;
+      padding: rem(4px);
+      height: rem(24.5px);
+      min-width: rem(50px);
+      border-radius: rem(3px);
+      display: flex;
+      & .icon{
+       position: relative;
+       top: rem(-5px);
+        & .completed-icon{
+          position: relative;
+          top: rem(2px);
+        }
+      }
+      & .complete-icon {
+        display: inline-block;
+      }
+
+      & .duedate-span {
+        color: white;
+        padding-inline-start: 2px;
+        padding-inline-end: 4px;
+
+      }
+    }
 
     & .badges {
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       gap: .5rem;
-      & span{
-        
-        line-height: 16px;
+
+      & span {
+        margin-inline-start: rem(2px);
         font-size: 12px;
         color: #5e6c84;
-        
+
       }
+
       & svg {
         position: relative;
         top: 4px;
-        &.atach{
+
+        &.atach {
           top: 4px;
         }
-        &.desc , &.checklists{
+
+        &.desc,
+        &.checklists {
           top: 2px;
         }
-     
+
       }
     }
-
-    & .members {
-      display: flex;
-      list-style: none;
-      gap: 3px;
-      & img,
-      & li {
-        border-radius: 50%;
-      }
-
-      & li {
-        cursor: pointer;
-        height: 30px;
-        width: 30px;
-      }
-    }
-
-
   }
 }
 
@@ -141,6 +194,6 @@
 
 }
 
-.background-color-cover{
+.background-color-cover {
   padding: 6px .5rem 2px .5rem;
 }

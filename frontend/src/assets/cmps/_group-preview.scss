@@ -1,17 +1,21 @@
 .group-content {
   margin: 0 .25rem;
+  overflow-y: auto;
 }
 
 .group-preview {
-  background-color: #ebecf0;
-  // TODO: responsive
-  width: 272px;
+  
+  .tasks-wrapper-vertical{
+    min-height: rem(10px);
+  }
 
-  border-radius: 3px;
+  background-color: #ebecf0;
+  width: rem(272px);
+  border-radius: rem(3px) ;
 
   display: flex;
   flex-direction: column;
-  max-height: 100%;
+  height: fit-content;
 
   margin: 0 4px;
 
