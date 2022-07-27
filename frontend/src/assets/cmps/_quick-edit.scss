@@ -1,20 +1,23 @@
-.quick-card-editor {
-  position: fixed;
-  background: #0009;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  z-index: 20;
+// .quick-card-editor {
+//   height: 100vh;
+//   width: 100%;
+//   // position: fixed;
+//   background: #0009;
+//   // top: 0;
+//   // bottom: 0;
+//   // right: 0;
+//   // left: 0;
+//   z-index: 20;
+// }
 
-  .quick-edit {
-    display: flex;
-    font-size: 0.875rem;
-    position: absolute;
-    top: 50%;
-    bottom: 50%;
-    left: 50%;
-  }
+.quick-edit {
+  display: flex;
+  // position: fixed;
+  z-index: 30;
+  // margin-right: 10px;
+  height: fit-content;
+  overflow: visible;
+  border-radius: 3px;
 
   button {
     border: none;
@@ -43,7 +46,8 @@
       background-color: white;
       border-radius: 0.1875em;
       padding: 10px;
-      width: 100%;
+      width: 264px;
+
       textarea {
         overflow: hidden;
         min-height: 5.625rem;
@@ -58,6 +62,8 @@
   .quick-card-editor-buttons {
     display: flex;
     flex-direction: column;
+    margin-left: 5px;
+    // width: fit-content;
 
     button {
       width: fit-content;
@@ -66,6 +72,8 @@
       margin: 0 0 4px 8px;
       padding: 6px 12px 6px 8px;
       transition: transform 85ms ease-in;
+      white-space: nowrap;
+      text-align: left;
 
       &:hover {
         background-color: #000c;
@@ -75,3 +83,5 @@
     }
   }
 }
+
+// }

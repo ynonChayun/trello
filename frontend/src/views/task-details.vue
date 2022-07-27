@@ -93,34 +93,7 @@ export default {
         memberList,
     },
     methods: {
-        // deleteChecklist(clId) {
-        //     const clIdx = this.task.checklists.findIndex((cl) => cl.id === clId)
-        //     this.task.checklists.splice(clIdx, 1)
-        // },
-        // addChecklist(checklist) {
-        //     this.task.checklists.push(checklist)
-        // },
-        // toggleMember(member) {
-        //     const memberIdx = this.task.members.findIndex(
-        //         (currMember) => currMember._id === member._id
-        //     )
-        //     if (memberIdx === -1) {
-        //         this.task.members.push(member)
-        //     } else {
-        //         this.task.members = this.task.members.filter(
-        //             (currMember) => currMember._id !== member._id
-        //         )
-        //     }
-
-        // },
-        // setDouDate(date) {
-        //     this.task.douDate = date
-        // },
-        // setAtachment(attachment) {
-        //     this.task.attachments ?
-        //         this.task.attachments.push(attachment) :
-        //         this.task.attachments = [attachment]
-        // },
+  
         saveChecklist(checklist) {
             const task = this.task;
             task.checklists.push(checklist);

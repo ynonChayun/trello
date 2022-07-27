@@ -2,12 +2,6 @@
   <a class="flex center member-preview" :style="colorClassByInitials">
     {{ memberInitials }}
   </a>
-  <!--TODO: <img
-        v-if="member.imgUrl"
-        :src="member.imgUrl"
-        height="120px"
-        width="120px"
-      /> -->
 </template>
 
 <script>
@@ -39,10 +33,14 @@ export default {
         '#0079bf',
         '#51e898',
       ]
-      const color = colors[Math.floor(Math.random() * colors.length)]
-      console.log('color: ', color)
+      const initials = this.memberInitials;
+      let num = initials.split("").reduce((acc, char) => {
+        acc += char.charCodeAt(0);
+        return acc;
+      }, 0);
+      const color = colors[num % 7]
       return { backgroundColor: color }
-    }
+    },
   },
 };
 </script>
