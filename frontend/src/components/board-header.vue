@@ -26,12 +26,19 @@
     </div>
     <div class="right-nav">
       <button>Filter</button>
-      <button>Show menu</button>
+      <button @click="isMenuOpen = true">Show menu</button>
+      <board-menu
+        v-if="isMenuOpen"
+        @close-menu="isMenuOpen = false"
+        @color-change="boardColorChange"
+        :board="board"
+      />
     </div>
   </section>
 </template>
 
 <script>
+import boardMenu from './board-menu.vue'
 export default {
   props: {
     board: Object,
@@ -40,6 +47,7 @@ export default {
   data() {
     return {
       boardCopy: null,
+      isMenuOpen: false,
     }
   },
 
@@ -49,18 +57,26 @@ export default {
 
   methods: {
     boardStarred() {
-      const board = JSON.parse(JSON.stringify(this.board))
-      board.isStarred = !board.isStarred
-      this.$emit('board-starred', board)
+      this.boardCopy.isStarred = !this.boardCopy.isStarred
+      this.$emit('board-update', this.boardCopy)
     },
     boardTitleChange() {
       this.boardCopy.title = this.boardCopy.title
-      this.$emit('title-change', this.boardCopy)
+      this.$emit('board-update', this.boardCopy)
+    },
+    boardColorChange(color) {
+      this.boardCopy.style.backgroundColor = color
+      this.boardCopy.imgUrl = null
+      this.$emit('board-update', this.boardCopy)
     },
     formattedName(memberName) {
       const spaceIdx = memberName.indexOf(' ')
       return memberName.charAt(0) + memberName.charAt(spaceIdx + 1)
     },
+  },
+
+  components: {
+    boardMenu,
   },
 }
 </script>

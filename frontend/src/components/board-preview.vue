@@ -1,9 +1,5 @@
 <template>
-  <a
-    class="board-link"
-    :href="`/board/${board._id}`"
-    :style="{ backgroundImage: `url(${board.imgUrl})` }"
-  >
+  <a class="board-link" :href="`/board/${board._id}`" :style="boardBackground">
     <div class="board-preview">
       <h3>{{ board.title }}</h3>
       <div @click.prevent="boardStarred" class="star-icon">
@@ -29,6 +25,14 @@ export default {
       const board = JSON.parse(JSON.stringify(this.board))
       board.isStarred = !board.isStarred
       this.$emit('board-starred', board)
+    },
+  },
+
+  computed: {
+    boardBackground() {
+      return this.board.imgUrl
+        ? { backgroundImage: `url(${this.board.imgUrl})` }
+        : { backgroundColor: this.board.style.backgroundColor }
     },
   },
 }

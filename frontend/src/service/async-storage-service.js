@@ -91,7 +91,7 @@ function _createBoards() {
         fullname: 'Abi Abambi',
         imgUrl: 'http://some-img',
       },
-      style: {},
+      style: { backgroundColor: 'rgb(0, 121, 191)' },
       labels: [
         {
           id: 'l101',
@@ -267,7 +267,7 @@ function _createBoards() {
           byMember: {
             _id: 'u101',
             fullname: 'Abi Abambi',
-            imgUrl: 'http://some-img',
+            imgUrl: '../assets/imgs/amit-profile.jpg',
           },
           task: {
             id: 'c101',
@@ -445,6 +445,7 @@ function _createBoards() {
       imgUrl:
         'https://images.unsplash.com/photo-1658276557505-a63c03fd332a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
       isStarred: true,
+      style: { backgroundColor: 'rgb(0, 121, 191)' },
     },
     {
       _id: 'b103',
@@ -452,6 +453,7 @@ function _createBoards() {
       imgUrl:
         'https://images.unsplash.com/photo-1657089342023-13325d7bfe10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
       isStarred: true,
+      style: { backgroundColor: 'rgb(0, 121, 191)' },
     },
     {
       _id: 'b104',
@@ -459,6 +461,7 @@ function _createBoards() {
       imgUrl:
         'https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=975&q=80',
       isStarred: false,
+      style: { backgroundColor: 'rgb(0, 121, 191)' },
     },
     {
       _id: 'b105',
@@ -466,6 +469,7 @@ function _createBoards() {
       imgUrl:
         'https://images.unsplash.com/photo-1656366631858-6d5ba6f5a58c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
       isStarred: true,
+      style: { backgroundColor: 'rgb(0, 121, 191)' },
     },
     {
       _id: 'b106',
@@ -473,6 +477,7 @@ function _createBoards() {
       imgUrl:
         'https://images.unsplash.com/photo-1519010470956-6d877008eaa4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80',
       isStarred: false,
+      style: { backgroundColor: 'rgb(0, 121, 191)' },
     },
   ]
 
