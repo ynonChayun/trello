@@ -111,11 +111,6 @@
             </section>
 
         </div>
-        <div class="task-preview">
-            <p class="task-title">{{ task.title }} </p>
-            <button @click.stop="removeTask">X</button>
-        </div>
-        </div>
     </Draggable>
 </template>
 
