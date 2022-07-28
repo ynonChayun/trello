@@ -3,11 +3,7 @@
     <div class="board-preview">
       <h3>{{ board.title }}</h3>
       <div @click.prevent="boardStarred" class="star-icon">
-        <font-awesome-icon
-          v-if="board.isStarred"
-          class="starred"
-          icon="fa-solid fa-star"
-        />
+        <font-awesome-icon v-if="board.isStarred" class="starred" icon="fa-solid fa-star" />
         <font-awesome-icon v-else class="unstarred" icon="fa-regular fa-star" />
       </div>
     </div>
@@ -30,7 +26,7 @@ export default {
 
   computed: {
     boardBackground() {
-      return this.board.style.bgCover
+      return (this.board.style.bgCover)
         ? { backgroundImage: `url(${this.board.style.bgCover})` }
         : { backgroundColor: this.board.style.bgColor }
     },
