@@ -4,7 +4,7 @@
   padding: 0.5rem;
   display: flex;
   justify-content: space-between;
-  padding: 0.5em 0.25em 0.25em 0.75em;
+  padding: 0.5em 0.25em 0.625em 0.75em;
 
   button {
     background-color: #ffffff3d;
@@ -29,6 +29,7 @@
     }
 
     input {
+      height: 2rem;
       font-size: 1.125rem;
       font-weight: 700;
       padding: 0 0.75rem;
@@ -36,8 +37,12 @@
       background-color: inherit;
       border: none;
       outline: none;
-      cursor: pointer;
       border-radius: 0.1875rem;
+
+      &:hover {
+        background-color: #ffffff52;
+        cursor: pointer;
+      }
 
       &:focus {
         background-color: white;
@@ -77,7 +82,12 @@
 
     .board-header-members {
       display: flex;
-      gap: 10px;
+      margin-inline-end: 0.25rem;
+
+      > * {
+        margin: 0 0 0 -0.125rem;
+      }
+
       .avatar {
         > * {
           height: 1.75rem;
@@ -91,6 +101,12 @@
   .right-nav {
     display: flex;
     gap: 0.3em;
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
 
     &:last-child {
       margin-inline-end: 0.25em;

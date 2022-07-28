@@ -12,8 +12,16 @@
         >
           <Draggable v-for="(group, idx) in board.groups" :key="group.id">
             <div>
-              <group-preview class="group-container" @saveBoard="saveBoard" :key="group.id" :group="group"
-                :boardId="board._id" :idx="idx" :board="board" @onEditIsToggle="editIsToggle" />
+              <group-preview
+                class="group-container"
+                @saveBoard="saveBoard"
+                :key="group.id"
+                :group="group"
+                :boardId="board._id"
+                :idx="idx"
+                :board="board"
+                @onEditIsToggle="editIsToggle"
+              />
             </div>
           </Draggable>
 
@@ -139,30 +147,31 @@ export default {
     },
     editIsToggle() {
       this.blackScreen = !this.blackScreen
-    }
+    },
   },
   computed: {
     board() {
       return this.$store.getters.currBoard
     },
     boardBackground() {
-      return this.board.imgUrl
-        ? { backgroundImage: `url(${this.board.imgUrl})` }
-        : { backgroundColor: this.board.style.backgroundColor }
+      return this.board.style.bgCover
+        ? { backgroundImage: `url(${this.board.style.bgCover})` }
+        : { backgroundColor: this.board.style.bgColor }
     },
     boradClass() {
-      if (this.blackScreen) return {
-        "backgroundColor": '#000000a3',
-        "z-index": "10",
-        // "width": "100vh",
-        "height": "100%",
-        "position": 'fixed',
-        "right": '0',
-        "left": '0',
-        "top": '0',
-        "bottom": '0',
-      }
-    }
+      if (this.blackScreen)
+        return {
+          backgroundColor: '#000000a3',
+          'z-index': '10',
+          // "width": "100vh",
+          height: '100%',
+          position: 'fixed',
+          right: '0',
+          left: '0',
+          top: '0',
+          bottom: '0',
+        }
+    },
   },
   unmounted() {},
 }

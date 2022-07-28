@@ -1,6 +1,5 @@
 <template>
   <section class="board-list">
-    <h1>hi from boards page</h1>
     <div class="boards-container">
       <div v-if="isStarredBoards" class="starred-boards">
         <div class="boards-status">
@@ -32,8 +31,13 @@
             :board="board"
             :key="board._id"
           />
-          <div class="create-board" @click="isCreate = !isCreate">Create new board</div>
-          <popup-add-board v-if="isCreate" @togglePopup="isCreate = !isCreate" />
+          <div class="create-board" @click="isCreate = !isCreate">
+            Create new board
+          </div>
+          <popup-add-board
+            v-if="isCreate"
+            @togglePopup="isCreate = !isCreate"
+          />
         </div>
       </div>
     </div>
