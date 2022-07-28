@@ -81,8 +81,6 @@ function _createBoards() {
     {
       _id: 'b101',
       title: 'sprint 7',
-      imgUrl:
-        'https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
       isStarred: true,
       archivedAt: 1589983468418,
       createdAt: 1589983468418,
@@ -91,7 +89,11 @@ function _createBoards() {
         fullname: 'Abi Abambi',
         imgUrl: 'http://some-img',
       },
-      style: { backgroundColor: 'rgb(0, 121, 191)' },
+      style: {
+        bgCover:
+          'https://images.unsplash.com/photo-1546830152-f6cc0b95b7b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1972&q=80',
+        bgColor: 'rgb(0, 121, 191)',
+      },
       labels: [
         {
           id: 'l101',
@@ -128,17 +130,20 @@ function _createBoards() {
         {
           _id: 'u101',
           fullname: 'Amit Sharafi',
-          imgUrl: '../assets/imgs/amit-profile.jpg',
+          imgUrl:
+            'https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
         },
         {
           _id: 'u102',
           fullname: 'Ynon Chayun',
-          imgUrl: '',
+          imgUrl:
+            'https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
         },
         {
           _id: 'u103',
           fullname: 'Yuval Levi',
-          imgUrl: '',
+          imgUrl:
+            'https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
         },
       ],
       groups: [
@@ -154,12 +159,14 @@ function _createBoards() {
                 {
                   _id: 'u101',
                   fullname: 'Tal Tarablus',
-                  imgUrl: 'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg',
+                  imgUrl:
+                    'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg',
                 },
                 {
                   _id: 'u102',
                   fullname: 'Ynon Chayun',
-                  imgUrl: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg',
+                  imgUrl:
+                    'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg',
                 },
               ],
             },
@@ -170,12 +177,14 @@ function _createBoards() {
                 {
                   _id: 'u101',
                   fullname: 'Tal Tarablus',
-                  imgUrl: 'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg',
+                  imgUrl:
+                    'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg',
                 },
                 {
                   _id: 'u102',
                   fullname: 'Ynon Chayun',
-                  imgUrl: 'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg',
+                  imgUrl:
+                    'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg',
                 },
               ],
             },
@@ -194,7 +203,8 @@ function _createBoards() {
                 {
                   _id: 'u102',
                   fullname: 'Ynon Chayun',
-                  imgUrl: 'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg',
+                  imgUrl:
+                    'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg',
                 },
               ],
             },
@@ -233,7 +243,8 @@ function _createBoards() {
                 {
                   _id: 'u101',
                   fullname: 'Tal Tarablus',
-                  imgUrl: 'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg',
+                  imgUrl:
+                    'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg',
                 },
                 {
                   _id: 'u102',
@@ -251,9 +262,10 @@ function _createBoards() {
                   'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
               },
               style: {
-                bgImg: 'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg',
+                bgImg:
+                  'https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg',
                 isCover: true,
-                isShadow: true
+                isShadow: true,
               },
             },
           ],
@@ -268,7 +280,53 @@ function _createBoards() {
           byMember: {
             _id: 'u101',
             fullname: 'Abi Abambi',
-            imgUrl: '../assets/imgs/amit-profile.jpg',
+            imgUrl:
+              'https://images.unsplash.com/photo-1658276557505-a63c03fd332a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+          },
+          task: {
+            id: 'c101',
+            title: 'Replace Logo',
+          },
+        },
+        {
+          id: 'a102',
+          txt: 'Changed Color',
+          createdAt: 154514,
+          byMember: {
+            _id: 'u101',
+            fullname: 'Yuval Levi',
+            imgUrl:
+              'https://images.unsplash.com/photo-1658276557505-a63c03fd332a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+          },
+          task: {
+            id: 'c101',
+            title: 'Replace Logo',
+          },
+        },
+        {
+          id: 'a103',
+          txt: 'Changed Color',
+          createdAt: 154514,
+          byMember: {
+            _id: 'u101',
+            fullname: 'Ynon Chayun',
+            imgUrl:
+              'https://images.unsplash.com/photo-1658276557505-a63c03fd332a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+          },
+          task: {
+            id: 'c101',
+            title: 'Replace Logo',
+          },
+        },
+        {
+          id: 'a104',
+          txt: 'renamed this board (from New name)',
+          createdAt: 154514,
+          byMember: {
+            _id: 'u101',
+            fullname: 'Amit Sharafi',
+            imgUrl:
+              'https://images.unsplash.com/photo-1658276557505-a63c03fd332a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
           },
           task: {
             id: 'c101',
@@ -283,42 +341,52 @@ function _createBoards() {
     {
       _id: 'b102',
       title: 'sprint 4',
-      imgUrl:
-        'https://images.unsplash.com/photo-1658276557505-a63c03fd332a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
       isStarred: true,
-      style: { backgroundColor: 'rgb(0, 121, 191)' },
+      style: {
+        bgCover:
+          'https://images.unsplash.com/photo-1546830152-f6cc0b95b7b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1972&q=80',
+        bgColor: 'rgb(0, 121, 191)',
+      },
     },
     {
       _id: 'b103',
       title: 'sprint 1',
-      imgUrl:
-        'https://images.unsplash.com/photo-1657089342023-13325d7bfe10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
       isStarred: true,
-      style: { backgroundColor: 'rgb(0, 121, 191)' },
+      style: {
+        bgCover:
+          'https://images.unsplash.com/photo-1546830152-f6cc0b95b7b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1972&q=80',
+        bgColor: 'rgb(0, 121, 191)',
+      },
     },
     {
       _id: 'b104',
       title: 'sprint 2',
-      imgUrl:
-        'https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=975&q=80',
       isStarred: false,
-      style: { backgroundColor: 'rgb(0, 121, 191)' },
+      style: {
+        bgCover:
+          'https://images.unsplash.com/photo-1546830152-f6cc0b95b7b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1972&q=80',
+        bgColor: 'rgb(0, 121, 191)',
+      },
     },
     {
       _id: 'b105',
       title: 'sprint 4',
-      imgUrl:
-        'https://images.unsplash.com/photo-1656366631858-6d5ba6f5a58c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
       isStarred: true,
-      style: { backgroundColor: 'rgb(0, 121, 191)' },
+      style: {
+        bgCover:
+          'https://images.unsplash.com/photo-1546830152-f6cc0b95b7b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1972&q=80',
+        bgColor: 'rgb(0, 121, 191)',
+      },
     },
     {
       _id: 'b106',
       title: 'sprint 4',
-      imgUrl:
-        'https://images.unsplash.com/photo-1519010470956-6d877008eaa4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80',
       isStarred: false,
-      style: { backgroundColor: 'rgb(0, 121, 191)' },
+      style: {
+        bgCover:
+          'https://images.unsplash.com/photo-1546830152-f6cc0b95b7b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1972&q=80',
+        bgColor: 'rgb(0, 121, 191)',
+      },
     },
   ]
 

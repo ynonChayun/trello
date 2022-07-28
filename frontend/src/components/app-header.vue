@@ -2,7 +2,10 @@ vue
 <template>
   <section class="app-header">
     <nav class="left-nav">
-      <a href="/">Trello</a>
+      <a href="/">
+        <font-awesome-icon icon="fa-brands fa-trello" />
+        <h1>Trello</h1>
+      </a>
       <button>
         Workspaces
         <span class="material-icons"> keyboard_arrow_down </span>
@@ -74,17 +77,5 @@ vue
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      isMenuOpen: false,
-    }
-  },
-
-  computed: {
-    toggleMenu() {
-      return this.isMenuOpen ? 'X' : '☰'
-    },
-  },
-}
+export default {}
 </script>

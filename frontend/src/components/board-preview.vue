@@ -30,9 +30,9 @@ export default {
 
   computed: {
     boardBackground() {
-      return this.board.imgUrl
-        ? { backgroundImage: `url(${this.board.imgUrl})` }
-        : { backgroundColor: this.board.style.backgroundColor }
+      return this.board.style.bgCover
+        ? { backgroundImage: `url(${this.board.style.bgCover})` }
+        : { backgroundColor: this.board.style.bgColor }
     },
   },
 }

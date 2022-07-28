@@ -21,16 +21,22 @@
           <img v-if="member.imgUrl" :src="member.imgUrl" />
           <span v-else>{{ formattedName(member.fullname) }}</span>
         </div>
-        <button>Invite</button>
       </div>
+      <button>Invite</button>
     </div>
     <div class="right-nav">
-      <button>Filter</button>
-      <button @click="isMenuOpen = true">Show menu</button>
+      <button>
+        <span>Filter</span>
+      </button>
+      <button @click="isMenuOpen = true">
+        <font-awesome-icon icon="fa-solid fa-ellipsis" />
+        <span>Show menu</span>
+      </button>
       <board-menu
-        v-if="isMenuOpen"
+        v-if="board"
         @close-menu="isMenuOpen = false"
-        @color-change="boardColorChange"
+        @background-change="boardBackgroundChange"
+        :isMenuOpen="isMenuOpen"
         :board="board"
       />
     </div>
@@ -64,9 +70,11 @@ export default {
       this.boardCopy.title = this.boardCopy.title
       this.$emit('board-update', this.boardCopy)
     },
-    boardColorChange(color) {
-      this.boardCopy.style.backgroundColor = color
-      this.boardCopy.imgUrl = null
+    boardBackgroundChange(background) {
+      this.boardCopy.style = {}
+      background.cover
+        ? (this.boardCopy.style.bgCover = background.cover)
+        : (this.boardCopy.style.bgColor = background.color)
       this.$emit('board-update', this.boardCopy)
     },
     formattedName(memberName) {
