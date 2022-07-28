@@ -1,15 +1,19 @@
 <template>
-
   <div class="board-headers">
     <app-header />
-    <board-header :board="board" />
+    <board-header @board-update="saveBoard" v-if="board" :board="board" />
   </div>
 
   <section v-if="board" class="board-view" :style="boardBackground">
     <router-view></router-view>
     <div v-if="board" class="board-canvas">
       <div class="board-fixed-container">
-        <Container @drop="onColumnDrop($event)" group-name="cols" tag="div" orientation="horizontal">
+        <Container
+          @drop="onColumnDrop($event)"
+          group-name="cols"
+          tag="div"
+          orientation="horizontal"
+        >
           <Draggable v-for="(group, idx) in board.groups" :key="group.id">
             <div>
               <group-preview
@@ -26,23 +30,58 @@
           </Draggable>
 
           <div class="add-new-group">
-            <button class="btn-add-group" v-if="!isAddNewGroup" @click="isAddNewGroup = true">
-              <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="icon"
-                height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                <path fill="none" stroke="#FFFFFF" stroke-width="2" d="M12,22 L12,2 M2,12 L22,12"></path>
+            <button
+              class="btn-add-group"
+              v-if="!isAddNewGroup"
+              @click="isAddNewGroup = true"
+            >
+              <svg
+                stroke="currentColor"
+                fill="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                class="icon"
+                height="1em"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill="none"
+                  stroke="#FFFFFF"
+                  stroke-width="2"
+                  d="M12,22 L12,2 M2,12 L22,12"
+                ></path>
               </svg>
               &nbsp; Add another list
             </button>
 
             <form v-else class="group-preview">
-              <input class="input-title" v-model="newGroup.title" type="text" @change="addGroup"
-                placeholder="Enter list title" />
+              <input
+                class="input-title"
+                v-model="newGroup.title"
+                type="text"
+                @change="addGroup"
+                placeholder="Enter list title"
+              />
 
               <div class="save-element-section">
                 <button @click.prevent="addGroup">Add list</button>
-                <svg @click="isAddNewGroup = false" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
-                  height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                  <path fill="none" stroke="#000" stroke-width="2" d="M3,3 L21,21 M3,21 L21,3"></path>
+                <svg
+                  @click="isAddNewGroup = false"
+                  stroke="currentColor"
+                  fill="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill="none"
+                    stroke="#000"
+                    stroke-width="2"
+                    d="M3,3 L21,21 M3,21 L21,3"
+                  ></path>
                 </svg>
               </div>
             </form>
@@ -70,7 +109,7 @@ export default {
     groupPreview,
     editableText,
     appHeader,
-    boardHeader
+    boardHeader,
   },
   data() {
     return {
@@ -139,7 +178,7 @@ export default {
         }
     },
   },
-  unmounted() { },
+  unmounted() {},
 }
 </script>
 
